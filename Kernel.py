@@ -9,14 +9,10 @@ class Kernel(object):
 	"""
 		Handles the complete request to response cycle.
 	"""
-	__routes   = {}
-	__config   = {}
-	__env      = {}
-	__request  = None
-	__response = None
-
-
 	def __init__(self):
+		self.__routes = {}
+		self.__config = {}
+		self.__env    = {}
 		self.__loadConfig()
 		self.__connectToDatabase()
 		self.__loadRoutes()
@@ -29,15 +25,15 @@ class Kernel(object):
 		self.__env = env
 
 		# Create a request instance
-		self.__request = Request(env=env)
+		request = Request(env=env)
 
 		# Create a response instance
-		self.__response = Response(
+		response = Response(
 			startResponse=startResponse,
-			request=self.__request
+			request=request
 		)
 
-		self.__addAccessControlHeader()
+		self.__addAccessControlHeader(request=request, response=response)
 
 		# Find the controller and method
 		keyRoute = env.get('REQUEST_METHOD') + '_' + env.get('PATH_INFO')
@@ -46,8 +42,8 @@ class Kernel(object):
 			# Found, so I call the controller method
 			try:
 				self.__routes[keyRoute].methodToCall(
-					request=self.__request,
-					response=self.__response
+					request=request,
+					response=response
 				)
 			except Exception as e:
 				if 'debug' in self.__config and self.__config['debug'] is True:
@@ -55,18 +51,18 @@ class Kernel(object):
 				else:
 					tb = ''
 
-				self.__response.returnCode = 500
-				self.__response.stringContent = 'Internal server error.\n{tb}'.format(tb=tb)
-				self.__response.contentType = 'text/plain'
-				self.__response.charset = 'utf-8'
+				response.returnCode = 500
+				response.stringContent = 'Internal server error.\n{tb}'.format(tb=tb)
+				response.contentType = 'text/plain'
+				response.charset = 'utf-8'
 		else:
 			# todo Error-Controller erstellen
-			self.__response.returnCode    = 404
-			self.__response.stringContent = 'No controller method found for route: ' + keyRoute
-			self.__response.contentType   = 'text/plain'
-			self.__response.charset       = 'utf-8'
+			response.returnCode    = 404
+			response.stringContent = 'No controller method found for route: ' + keyRoute
+			response.contentType   = 'text/plain'
+			response.charset       = 'utf-8'
 
-		return self.__response.getContent()
+		return response.getContent()
 
 
 	def __loadConfig(self):
@@ -109,19 +105,20 @@ class Kernel(object):
 			k = route.httpMethod.name + '_' + route.path
 			self.__routes[k] = route
 
-	def __addAccessControlHeader(self):
+
+	def __addAccessControlHeader(self, request: Request, response: Response):
 		if 'accessControlAllowOrigin' not in self.__config:
 			return
 
 		accessControlAllowOrigin = []
 		accessControlAllowOrigin = accessControlAllowOrigin + self.__config['accessControlAllowOrigin']
 
-		if 0 == len(accessControlAllowOrigin) or False == self.__request.hasHeader('Origin'):
+		if 0 == len(accessControlAllowOrigin) or False == request.hasHeader('Origin'):
 			return
 
 		for url in accessControlAllowOrigin:
-			if self.__request.getHeader('Origin') == url:
-				self.__response.addHeader('Access-Control-Allow-Origin', url)
+			if request.getHeader('Origin') == url:
+				response.addHeader('Access-Control-Allow-Origin', url)
 
 
 	def __str__(self):

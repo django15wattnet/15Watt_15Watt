@@ -108,6 +108,28 @@ class Request(object):
 		return name in self.__header
 
 
+	def envHasKey(self, key: str) -> bool:
+		"""
+			Prüft, ob es für key einen Wert in den env-Values gibt
+		"""
+		return key in self.__env
+
+
+	def getEnvByKey(self, key: str) -> str|None:
+		"""
+			Liefert den Wert zu key aus dem env-Dict oder None
+		"""
+		return self.__env.get(key, None)
+
+
+	@property
+	def env(self) -> dict:
+		"""
+			Liefert das env-Dict
+		"""
+		return self.__env
+
+
 	# todo seek(0) einbauen unquote einbauen
 
 
@@ -144,8 +166,6 @@ class Request(object):
 
 		for key in fieldStorage:
 			s = fieldStorage[key]
-
-			print(key)
 
 			if type(s) is list:
 				self.__params[key] = s

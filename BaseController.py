@@ -1,5 +1,3 @@
-
-
 class BaseController(object):
 	"""
 		Basisklasse aller Controller
