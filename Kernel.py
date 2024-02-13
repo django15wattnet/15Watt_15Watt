@@ -1,8 +1,11 @@
 import traceback
 from importlib import import_module
+from importlib.resources import path
+
 from sqlobject import *
 from .Request import Request
 from .Response import Response
+from .Route import Route, HttpMethods
 
 
 class Kernel(object):
@@ -24,23 +27,23 @@ class Kernel(object):
 		"""
 		self.__env = env
 
-		# Create a request instance
-		request = Request(env=env)
-
-		# Create a response instance
-		response = Response(
-			startResponse=startResponse,
-			request=request
-		)
-
-		self.__addAccessControlHeader(request=request, response=response)
-
-		# Find the controller and method
+		# Find the controller and method, for a route without parameters
 		keyRoute = env.get('REQUEST_METHOD') + '_' + env.get('PATH_INFO')
 
 		if keyRoute in self.__routes:
 			# Found, so I call the controller method
+			# Create a request instance
+			request = Request(env=env)
+
+			# Create a response instance
+			response = Response(
+				startResponse=startResponse,
+				request=request
+			)
+
 			try:
+				self.__addAccessControlHeader(request=request, response=response)
+
 				self.__routes[keyRoute].methodToCall(
 					request=request,
 					response=response
@@ -55,12 +58,57 @@ class Kernel(object):
 				response.stringContent = 'Internal server error.\n{tb}'.format(tb=tb)
 				response.contentType = 'text/plain'
 				response.charset = 'utf-8'
-		else:
-			# todo Error-Controller erstellen
-			response.returnCode    = 404
-			response.stringContent = 'No controller method found for route: ' + keyRoute
-			response.contentType   = 'text/plain'
-			response.charset       = 'utf-8'
+
+			return response.getContent()
+
+		# It has to be a route with parameters
+		# Iterate over all routes
+		for idx in self.__routes:
+			if self.__routes[idx].match(path=env.get('PATH_INFO'), httpMethod=HttpMethods[env.get('REQUEST_METHOD')]):
+				request = Request(
+					env=env,
+					paramsFromRoute=self.__routes[idx].getParamsFromPath(path=env.get('PATH_INFO'))
+				)
+				response = Response(
+					startResponse=startResponse,
+					request=request
+				)
+
+				# Call the controller method
+				try:
+					self.__routes[idx].methodToCall(
+						request=request,
+						response=response
+					)
+
+					self.__addAccessControlHeader(request=request, response=response)
+
+				except Exception as e:
+					if 'debug' in self.__config and self.__config['debug'] is True:
+						tb = traceback.format_exc()
+					else:
+						tb = ''
+
+					response.returnCode = 500
+					response.stringContent = f'Internal server error.\n{tb}'
+					response.contentType = 'text/plain'
+					response.charset = 'utf-8'
+
+				return response.getContent()
+
+
+		# No matching route found
+		# todo Error-Controller erstellen
+		request = Request(env=env)
+		response = Response(
+			startResponse=startResponse,
+			request=request
+		)
+
+		response.returnCode    = 404
+		response.stringContent = f'No controller method found for route: {keyRoute}'
+		response.contentType   = 'text/plain'
+		response.charset       = 'utf-8'
 
 		return response.getContent()
 
@@ -102,7 +150,7 @@ class Kernel(object):
 		module = import_module(name='routes')
 		for route in getattr(module, 'routes'):
 			route.setConfig(config=self.__config)
-			k = route.httpMethod.name + '_' + route.path
+			k = route.httpMethod.name + '_' + route.pathRegEx
 			self.__routes[k] = route
 
 

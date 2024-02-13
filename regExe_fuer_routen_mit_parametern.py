@@ -3,12 +3,17 @@ import re
 # RegExe um Routen mit Parametern nutzen zu können.
 # Könnte den aktuellen 1:1-Match in Kernel ersetzen.
 
-pIn = '/api/get/42/do/jubel'
+pIn = '/api/get/42/do'
 path = '/api/get/{id}/do/{what}'
 params = {
 	'id': 'int',
 	'what': 'str'
 }
+
+
+# pIn = '/api/get'
+# path = '/api/get'
+# params = {}
 
 
 for placeHolder in re.findall(r'\{[\w]{1,}\}', path):
@@ -29,14 +34,22 @@ print('-------------------')
 
 
 matches = re.search(path, pIn)
+if matches is None:
+	print('No match')
+	exit()
 
 p = {}
 for placeHolder in params:
-	print(matches.group(placeHolder))
+	print(f'placeHolder = {placeHolder}')
 	if 'str' == params[placeHolder]:
 		p[placeHolder] = matches.group(placeHolder)
 	elif 'int' == params[placeHolder]:
 		p[placeHolder] = int(matches.group(placeHolder))
 
 print(p)
+print('############')
 
+if re.match(path, pIn):
+	print('Match')
+else:
+	print('No match')

@@ -3,13 +3,14 @@ from urllib.parse import unquote
 from io import BytesIO
 
 from .Exceptions import ParamNotFound, ValueNotFound
+from .Route import Route
 
 
 class Request(object):
 	"""
 		Abbildung des Requests
 	"""
-	def __init__(self, env: dict):
+	def __init__(self, env: dict, paramsFromRoute: dict = {}):
 		self.__env    = env
 		self.__header = {}
 		self.__params = {}
@@ -51,6 +52,10 @@ class Request(object):
 		self.__requestMethod = self.__env.get('REQUEST_METHOD', 'GET')
 
 		byteIo.close()
+
+		# Die Parameter aus der Route hinzufügen
+		for key in paramsFromRoute:
+			self.__params[key] = paramsFromRoute[key]
 
 		return
 
