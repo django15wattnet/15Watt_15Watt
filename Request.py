@@ -41,12 +41,17 @@ class Request(object):
 				self.__env,
 				FieldStorage(fp=byteIo, environ=env, keep_blank_values=True)
 			)
+
+			# todo: Lesen des Bodys sauber umsetzen
+			if self.__requestBodySize > 0:
+				byteIo.seek(0)
+				self.__requestBody = byteIo.read(self.__requestBodySize)
 		else:
 			self.__fillByOwnBodyParse(byteIo)
 
 		# Read the requests body no matter what content type or method the request is
-		byteIo.seek(0)
-		self.__requestBody = unquote(byteIo.read(self.__requestBodySize).decode('utf-8'))
+		# byteIo.seek(0)
+		# self.__requestBody = unquote(byteIo.read(self.__requestBodySize).decode('utf-8'))
 
 		# Methode
 		self.__requestMethod = self.__env.get('REQUEST_METHOD', 'GET')
@@ -82,9 +87,17 @@ class Request(object):
 		return self.__params[name]
 
 
+	def getDictParams(self) -> dict:
+		"""
+			Liefert die Parameter als Dict
+		:return:
+		"""
+		return self.__params
+
+
 	def has(self, name: str):
 		"""
-			Prüft ob es den Parameter name gibt
+			Prüft, ob es den Parameter name gibt
 		:param name:
 		:return: bool
 		"""

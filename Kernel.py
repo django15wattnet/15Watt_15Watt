@@ -1,7 +1,5 @@
 import traceback
 from importlib import import_module
-from importlib.resources import path
-
 from sqlobject import *
 from .Request import Request
 from .Response import Response
@@ -41,6 +39,8 @@ class Kernel(object):
 				request=request
 			)
 
+			response.addHeader('X-FRAMEWORK', 'Wsgi by Thomas Siemion')
+
 			try:
 				self.__addAccessControlHeader(request=request, response=response)
 
@@ -55,7 +55,7 @@ class Kernel(object):
 					tb = ''
 
 				response.returnCode = 500
-				response.stringContent = 'Internal server error.\n{tb}'.format(tb=tb)
+				response.stringContent = 'Internal server _error.\n{tb}'.format(tb=tb)
 				response.contentType = 'text/plain'
 				response.charset = 'utf-8'
 
@@ -90,7 +90,7 @@ class Kernel(object):
 						tb = ''
 
 					response.returnCode = 500
-					response.stringContent = f'Internal server error.\n{tb}'
+					response.stringContent = f'Internal server _error.\n{tb}'
 					response.contentType = 'text/plain'
 					response.charset = 'utf-8'
 
@@ -98,7 +98,7 @@ class Kernel(object):
 
 
 		# No matching route found
-		# todo Error-Controller erstellen
+		# todo Error-AdmController erstellen
 		request = Request(env=env)
 		response = Response(
 			startResponse=startResponse,
@@ -150,7 +150,7 @@ class Kernel(object):
 		module = import_module(name='routes')
 		for route in getattr(module, 'routes'):
 			route.setConfig(config=self.__config)
-			k = route.httpMethod.name + '_' + route.pathRegEx
+			k = f'{route.httpMethod.name}_{route.pathRegEx}'
 			self.__routes[k] = route
 
 

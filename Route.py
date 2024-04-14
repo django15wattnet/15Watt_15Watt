@@ -26,7 +26,7 @@ class HttpMethods(Enum):
 
 class Route(object):
     """
-        Verknüpfung zwischen Pfad und Controller-Methode
+        Verknüpfung zwischen Pfad und AdmController-Methode
         todo Routen mit Parametern ermöglichen. Siehe: regExe_fuer_routen_mit_parametern.py
     """
     def __init__(
@@ -111,8 +111,8 @@ class Route(object):
         nameModule = '.'.join(self.__nameControllerParts[:-1])
         nameClass  = self.__nameControllerParts[-1]
         module     = import_module(name=nameModule)
-        # todo inject Request, Response
         inst       = getattr(module, nameClass)(config=self.__config)
+
         return getattr(inst, self.__nameMethod)
 
 
@@ -141,10 +141,4 @@ class Route(object):
 
 
     def __str__(self):
-        return 'Path={path} {httpMethod} {controller}.{method}'\
-            .format(
-                path=self.__path,
-                httpMethod=self.__httpMethod.name,
-                controller='.'.join(self.__nameControllerParts),
-                method=self.__nameMethod
-            )
+        return f'Route - Path={self.__path} {self.__httpMethod.name} {".".join(self.__nameControllerParts)}.{self.__nameMethod}'

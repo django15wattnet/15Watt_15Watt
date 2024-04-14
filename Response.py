@@ -112,40 +112,49 @@ class Response(object):
     """
         Response, that is sent back to the web server
     """
-    __request = None
-    __startResponse = None
-
-    contentType = 'text/plain'
-    charset     = 'utf-8'
-    returnCode  = 200
-
-    __arrHeaders = {}
-    __arrCookies = {}
-
-    # The content to send as a byte array
-    __byteContent = None
-
-    # The content to send as a string
-    __stringContent = ''
-
-
     def __init__(self, request: Request, startResponse):
         self.__request       = request
         self.__startResponse = startResponse
+        self.contentType     = 'text/plain'
+        self.charset         = 'utf-8'
+        self.returnCode      = 200
+        self.__arrHeaders    = {}
+        self.__arrCookies    = {}
+
+        # The content to send as a byte array
+        self.__byteContent = None
+
+        # The content to send as a string
+        self.__stringContent = ''
+
 
     # Getters for the private properties
     @property
     def request(self) -> Request:
         return self.__request
 
+
     @property
-    def stringContent(self):
+    def stringContent(self) -> str:
         return self.__stringContent
 
+
     @stringContent.setter
-    def stringContent(self, strCont: str):
+    def stringContent(self, strCont: str) -> None:
         self.__byteContent   = None
         self.__stringContent = strCont
+
+
+    @property
+    def byteContent(self) -> bytes:
+        return self.__byteContent
+
+
+    @byteContent.setter
+    def byteContent(self, byteCont: bytes) -> None:
+        self.__stringContent = ''
+        self.__byteContent   = byteCont
+
 
     def addHeader(self, key: str, value: str):
         """
@@ -155,6 +164,7 @@ class Response(object):
         self.__arrHeaders[key] = value
         return self
 
+
     def addCookie(self, cookie: Cookie):
         """
             Adds a cookie to the response.
@@ -162,6 +172,7 @@ class Response(object):
         """
         self.__arrCookies[cookie.key] = cookie
         return self
+
 
     def getContent(self) -> list[bytes]:
         """
@@ -181,6 +192,14 @@ class Response(object):
 
         # Return the byte content
         return [self.__byteContent]
+
+
+    def redirect(self, url: str, code: int = 303) -> None:
+        """
+            Redirects the user to the given url
+        """
+        self.returnCode = code
+        self.addHeader('Location', url)
 
 
     def __buildHeader(self) -> list[tuple]:

@@ -3,7 +3,7 @@ from Wsgi.BaseController import BaseController
 
 class BaseTplController(BaseController):
 	"""
-		Basisklasse aller Controller
+		Basisklasse aller AdmController
 	"""
 	def __init__(self, config: dict):
 		super().__init__(config=config)

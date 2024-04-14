@@ -29,3 +29,7 @@ class InvalidData(Base):
 
 class NotUnique(Base):
     pass
+
+
+class Unauthorized(Base):
+    pass
