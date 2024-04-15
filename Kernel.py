@@ -10,7 +10,11 @@ class Kernel(object):
 	"""
 		Handles the complete request to response cycle.
 	"""
-	def __init__(self):
+	def __init__(self, nameConfig: str = 'config', nameRoutes: str = 'routes'):
+
+		self.__nameConfig = nameConfig
+		self.__nameRoutes = nameRoutes
+
 		self.__routes = {}
 		self.__config = {}
 		self.__env    = {}
@@ -118,7 +122,7 @@ class Kernel(object):
 			Reads the variables from project root.config.py
 		:return:
 		"""
-		config = import_module(name='config')
+		config = import_module(name=self.__nameConfig)
 		for k in dir(config):
 			if k.startswith('__'):
 				continue
@@ -147,8 +151,8 @@ class Kernel(object):
 			Loads all routes and injects the configuration to them
 		:return:
 		"""
-		module = import_module(name='routes')
-		for route in getattr(module, 'routes'):
+		module = import_module(name=self.__nameRoutes)
+		for route in getattr(module, self.__nameRoutes):
 			route.setConfig(config=self.__config)
 			k = f'{route.httpMethod.name}_{route.pathRegEx}'
 			self.__routes[k] = route
