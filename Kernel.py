@@ -35,7 +35,7 @@ class Kernel(object):
 		if keyRoute in self.__routes:
 			# Found, so I call the controller method
 			# Create a request instance
-			request = Request(env=env)
+			request = Request(env=env, paramsFromRoute={})
 
 			# Create a response instance
 			response = Response(
@@ -102,7 +102,7 @@ class Kernel(object):
 
 
 		# No matching route found
-		# todo Error-AdmController erstellen
+		# todo Error-Controller erstellen
 		request = Request(env=env)
 		response = Response(
 			startResponse=startResponse,

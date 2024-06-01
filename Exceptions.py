@@ -15,6 +15,10 @@ class ValueNotFound(Base):
     pass
 
 
+class FileNotFound(Base):
+    pass
+
+
 class NotAllowedHttpMethod(Base):
     pass
 

@@ -1,22 +1,25 @@
-from cgi import FieldStorage
-from urllib.parse import unquote
+from typing import Dict
+from urllib.parse import unquote, parse_qs
 from io import BytesIO
-
-from .Exceptions import ParamNotFound, ValueNotFound
-from .Route import Route
+from Wsgi.multipart import parse_form_data, MultipartPart
+from .Exceptions import ParamNotFound, ValueNotFound, FileNotFound
 
 
 class Request(object):
 	"""
 		Abbildung des Requests
 	"""
-	def __init__(self, env: dict, paramsFromRoute: dict = {}):
-		self.__env    = env
-		self.__header = {}
-		self.__params = {}
+	def __init__(self, env: dict, paramsFromRoute: dict):
+		self.__env      = env
+		self.__header   = {}
+		self.__user     = self.__user = env.get('REMOTE_USER', '')
+		self.__password = ''
+
+		self.__params, self.__files = self.__getParameters(env, paramsFromRoute)
 
 		self.__requestBodySize = 0
-		self.__requestBody = ''
+		self.__requestBody     = ''
+
 		try:
 			self.__requestBodySize = int(self.__env.get('CONTENT_LENGTH', 0))
 		except ValueError:
@@ -26,46 +29,18 @@ class Request(object):
 
 		byteIo = BytesIO(initial_bytes=env['wsgi.input'].read(self.__requestBodySize))
 
-		# Content-Type ermitteln
-		if 'CONTENT_TYPE' in env:
-			if env['CONTENT_TYPE'].startswith('multipart/form-data'):
-				self.__contentType = 'multipart/form-data'
-			else:
-				self.__contentType = env['CONTENT_TYPE']
-		else:
-			self.__contentType = ''
-
-		# Soll sich FieldStorage komplett ums Parsen kümmern
-		if self.__contentType.split(';')[0] in ['multipart/form-data', 'application/x-www-form-urlencoded']:
-			self.__getHeaderAndParamsFromFieldStorage(
-				self.__env,
-				FieldStorage(fp=byteIo, environ=env, keep_blank_values=True)
-			)
-
-			# todo: Lesen des Bodys sauber umsetzen
-			if self.__requestBodySize > 0:
-				byteIo.seek(0)
-				self.__requestBody = byteIo.read(self.__requestBodySize)
-		else:
-			self.__fillByOwnBodyParse(byteIo)
-
 		# Read the requests body no matter what content type or method the request is
-		# byteIo.seek(0)
-		# self.__requestBody = unquote(byteIo.read(self.__requestBodySize).decode('utf-8'))
+		byteIo.seek(0)
+		self.__requestBody = unquote(byteIo.read(self.__requestBodySize).decode('utf-8'))
+		byteIo.close()
 
 		# Methode
 		self.__requestMethod = self.__env.get('REQUEST_METHOD', 'GET')
 
-		byteIo.close()
-
-		# Die Parameter aus der Route hinzufügen
-		for key in paramsFromRoute:
-			self.__params[key] = paramsFromRoute[key]
-
 		return
 
 
-	def getRequestBody(self):
+	def getRequestBody(self) -> str:
 		return self.__requestBody
 
 
@@ -73,16 +48,27 @@ class Request(object):
 		"""
 			Liefert den Parameter name.
 			Gibt es mehrere Werte mit dem Namen, wird der erste Wert geliefert.
-		:param name:
-		:param name:
-		:return:
 		:raise: ParamNotFound
 		"""
 		if name not in self.__params:
-			raise ParamNotFound('Parameter {name} not found'.format(name=name))
+			raise ParamNotFound(f'Parameter {name} not found')
 
-		if type(self.__params[name]) is list:
-			return self.__params[name][0].value
+		if 0 == len(self.__params[name]):
+			raise ParamNotFound(f'Parameter {name} is empty')
+
+		return self.__params[name][0]
+
+
+	def getAsList(self, name: str) -> list:
+		"""
+			Liefert die Liste der Werte des Parameters name
+		:raise: ParamNotFound
+		"""
+		if name not in self.__params:
+			raise ParamNotFound(f'Parameter {name} not found')
+
+		if 0 == len(self.__params[name]):
+			raise ParamNotFound(f'Parameter {name} is empty')
 
 		return self.__params[name]
 
@@ -104,6 +90,34 @@ class Request(object):
 		return name in self.__params
 
 
+	def hasFile(self, name: str):
+		"""
+			Prüft, ob es für name eine Datei gibt
+		:param name:
+		:return:
+		"""
+		return name in self.__files
+
+
+	def getFile(self, name: str) -> MultipartPart:
+		"""
+			Liefert die Datei zu name
+		:raise: ParamNotFound
+		"""
+		if name not in self.__files:
+			raise FileNotFound(f'File {name} not found')
+
+		return self.__files[name]
+
+
+	def getDíctFiles(self) -> Dict[str, MultipartPart]:
+		"""
+			Liefert die Dateien als Dict
+		:return:
+		"""
+		return self.__files
+
+
 	def getHeader(self, name: str):
 		"""
 			Liefert das Header-Value zu name
@@ -112,7 +126,7 @@ class Request(object):
 		:raise: ValueNotFound
 		"""
 		if name not in self.__header:
-			raise ValueNotFound('Header-Field {name} not found'.format(name=name))
+			raise ValueNotFound(f'Header-Field {name} not found')
 
 		return self.__header[name]
 
@@ -148,47 +162,50 @@ class Request(object):
 		return self.__env
 
 
-	# todo seek(0) einbauen unquote einbauen
-
-
-	def __fillByOwnBodyParse(self, byteIo):
+	def __getParameters(self, env: dict, paramsFromRoute: dict) -> (dict, dict):
 		"""
-			Der Content-Type kann nicht von FieldStorage verarbeitet werden.
-		:return:
+			Reads the parameters from all sources:
+				- from the query string (GET)
+				- from the request body (POST, PUT)
+				- from the path (Route)
+
+			Each parameter can have multiple values.
+			Files will be stored as a parameter und in
 		"""
-		# Zuerst den Body selbst auslesen
-		if self.__requestBodySize > 0:
-			self.__requestBody = byteIo.read(self.__requestBodySize)
+		dictParams = {}
+		dictFiles  = {}
 
-		env = self.__env.copy()
-		env['CONTENT_LENGTH'] = 0
-		env['CONTENT_TYPE']   = 'application/x-www-form-urlencoded'
+		# Die Parameter aus der Route hinzufügen
+		for key in paramsFromRoute:
+			dictParams[key] = [paramsFromRoute[key]]
+			print((paramsFromRoute[key]))
 
-		byteIo.seek(0)
-		self.__getHeaderAndParamsFromFieldStorage(
-			env=env,
-			fieldStorage=FieldStorage(fp=byteIo, environ=env, keep_blank_values=True)
-		)
+		# Die Parameter aus dem Query-String hinzufügen
+		queryParams = parse_qs(env.get('QUERY_STRING', ''))
+		for item in queryParams.items():
+			if item[0] in dictParams:
+				dictParams[item[0]] += item[1]
+			else:
+				dictParams[item[0]] = item[1]
 
-		return
+		# Die Parameter aus dem Body hinzufügen
+		(dictForm, dictMultiFiles) = parse_form_data(environ=env)
+
+		for key in dictForm:
+
+			if key in dictParams:
+				dictParams[key] += [dictForm[key]]
+			else:
+				dictParams[key] = [dictForm[key]]
 
 
-	def __getHeaderAndParamsFromFieldStorage(self, env: dict, fieldStorage: FieldStorage):
-		"""
-			Liest aus der FieldStorage die Header- und Parameterwerte.
-		:param fieldStorage:
-		:return:
-		"""
-		for key, val in env.items():
-			self.__header[key] = val
+		for key in dictMultiFiles:
+			if key in dictParams:
+				dictParams[key] += [dictMultiFiles[key]]
+			else:
+				dictParams[key] = [dictMultiFiles[key]]
 
-		for key in fieldStorage:
-			s = fieldStorage[key]
+			# Save files separately
+			dictFiles[key] = dictMultiFiles[key]
 
-			if type(s) is list:
-				self.__params[key] = s
-				continue
-
-			self.__params[key] = s.value
-
-		return
+		return dictParams, dictFiles
