@@ -4,6 +4,7 @@ import re
 from .Exceptions import NotAllowedHttpMethod, InvalidData
 
 
+
 class HttpMethods(Enum):
     """
         Die erlaubten HTTP-Methoden
