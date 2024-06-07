@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>Wsgi.Request API documentation</title>
+<title>15Watt_Wsgi.Request API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>Wsgi.Request</code></h1>
+<h1 class="title">Module <code>15Watt_Wsgi.Request</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -238,7 +238,7 @@ class Request(object):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="Wsgi.Request.Request"><code class="flex name class">
+<dt id="15Watt_Wsgi.Request.Request"><code class="flex name class">
 <span>class <span class="ident">Request</span></span>
 <span>(</span><span>env: dict, paramsFromRoute: dict)</span>
 </code></dt>
@@ -445,7 +445,7 @@ class Request(object):
 </details>
 <h3>Instance variables</h3>
 <dl>
-<dt id="Wsgi.Request.Request.env"><code class="name">var <span class="ident">env</span> : dict</code></dt>
+<dt id="15Watt_Wsgi.Request.Request.env"><code class="name">var <span class="ident">env</span> : dict</code></dt>
 <dd>
 <div class="desc"><p>Returns the environment dictionary.</p></div>
 <details class="source">
@@ -463,7 +463,7 @@ def env(self) -&gt; dict:
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="Wsgi.Request.Request.envHasKey"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.envHasKey"><code class="name flex">
 <span>def <span class="ident">envHasKey</span></span>(<span>self, key: str) ‑> bool</span>
 </code></dt>
 <dd>
@@ -479,7 +479,7 @@ def env(self) -&gt; dict:
         return key in self.__env</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.get"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>self, name: str)</span>
 </code></dt>
 <dd>
@@ -506,7 +506,7 @@ If there are multiple values with the same name, the first value is returned.</p
         return self.__params[name][0]</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.getAsList"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.getAsList"><code class="name flex">
 <span>def <span class="ident">getAsList</span></span>(<span>self, name: str) ‑> list</span>
 </code></dt>
 <dd>
@@ -531,7 +531,7 @@ If there are multiple values with the same name, the first value is returned.</p
         return self.__params[name]</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.getDictParams"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.getDictParams"><code class="name flex">
 <span>def <span class="ident">getDictParams</span></span>(<span>self) ‑> dict</span>
 </code></dt>
 <dd>
@@ -547,8 +547,8 @@ If there are multiple values with the same name, the first value is returned.</p
         return self.__params</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.getDíctFiles"><code class="name flex">
-<span>def <span class="ident">getDíctFiles</span></span>(<span>self) ‑> Dict[str, <a title="Wsgi.multipart.MultipartPart" href="multipart.html#Wsgi.multipart.MultipartPart">MultipartPart</a>]</span>
+<dt id="15Watt_Wsgi.Request.Request.getDíctFiles"><code class="name flex">
+<span>def <span class="ident">getDíctFiles</span></span>(<span>self) ‑> Dict[str, 15Watt_Wsgi.multipart.MultipartPart]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns all files as a dictionary.</p></div>
@@ -563,7 +563,7 @@ If there are multiple values with the same name, the first value is returned.</p
         return self.__files</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.getEnvByKey"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.getEnvByKey"><code class="name flex">
 <span>def <span class="ident">getEnvByKey</span></span>(<span>self, key: str) ‑> str | None</span>
 </code></dt>
 <dd>
@@ -579,8 +579,8 @@ If there are multiple values with the same name, the first value is returned.</p
         return self.__env.get(key, None)</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.getFile"><code class="name flex">
-<span>def <span class="ident">getFile</span></span>(<span>self, name: str) ‑> <a title="Wsgi.multipart.MultipartPart" href="multipart.html#Wsgi.multipart.MultipartPart">MultipartPart</a></span>
+<dt id="15Watt_Wsgi.Request.Request.getFile"><code class="name flex">
+<span>def <span class="ident">getFile</span></span>(<span>self, name: str) ‑> 15Watt_Wsgi.multipart.MultipartPart</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the file with the name.</p></div>
@@ -598,7 +598,7 @@ If there are multiple values with the same name, the first value is returned.</p
         return self.__files[name]</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.getHeader"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.getHeader"><code class="name flex">
 <span>def <span class="ident">getHeader</span></span>(<span>self, name: str)</span>
 </code></dt>
 <dd>
@@ -617,7 +617,7 @@ If there are multiple values with the same name, the first value is returned.</p
         return self.__header[name]</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.getRequestBody"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.getRequestBody"><code class="name flex">
 <span>def <span class="ident">getRequestBody</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
@@ -630,7 +630,7 @@ If there are multiple values with the same name, the first value is returned.</p
         return self.__requestBody</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.has"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.has"><code class="name flex">
 <span>def <span class="ident">has</span></span>(<span>self, name: str)</span>
 </code></dt>
 <dd>
@@ -646,7 +646,7 @@ If there are multiple values with the same name, the first value is returned.</p
         return name in self.__params</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.hasFile"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.hasFile"><code class="name flex">
 <span>def <span class="ident">hasFile</span></span>(<span>self, name: str)</span>
 </code></dt>
 <dd>
@@ -662,7 +662,7 @@ If there are multiple values with the same name, the first value is returned.</p
         return name in self.__files</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Request.Request.hasHeader"><code class="name flex">
+<dt id="15Watt_Wsgi.Request.Request.hasHeader"><code class="name flex">
 <span>def <span class="ident">hasHeader</span></span>(<span>self, name: str)</span>
 </code></dt>
 <dd>
@@ -691,27 +691,27 @@ If there are multiple values with the same name, the first value is returned.</p
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="Wsgi" href="index.html">Wsgi</a></code></li>
+<li><code><a title="15Watt_Wsgi" href="index.html">15Watt_Wsgi</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="Wsgi.Request.Request" href="#Wsgi.Request.Request">Request</a></code></h4>
+<h4><code><a title="15Watt_Wsgi.Request.Request" href="#15Watt_Wsgi.Request.Request">Request</a></code></h4>
 <ul class="two-column">
-<li><code><a title="Wsgi.Request.Request.env" href="#Wsgi.Request.Request.env">env</a></code></li>
-<li><code><a title="Wsgi.Request.Request.envHasKey" href="#Wsgi.Request.Request.envHasKey">envHasKey</a></code></li>
-<li><code><a title="Wsgi.Request.Request.get" href="#Wsgi.Request.Request.get">get</a></code></li>
-<li><code><a title="Wsgi.Request.Request.getAsList" href="#Wsgi.Request.Request.getAsList">getAsList</a></code></li>
-<li><code><a title="Wsgi.Request.Request.getDictParams" href="#Wsgi.Request.Request.getDictParams">getDictParams</a></code></li>
-<li><code><a title="Wsgi.Request.Request.getDíctFiles" href="#Wsgi.Request.Request.getDíctFiles">getDíctFiles</a></code></li>
-<li><code><a title="Wsgi.Request.Request.getEnvByKey" href="#Wsgi.Request.Request.getEnvByKey">getEnvByKey</a></code></li>
-<li><code><a title="Wsgi.Request.Request.getFile" href="#Wsgi.Request.Request.getFile">getFile</a></code></li>
-<li><code><a title="Wsgi.Request.Request.getHeader" href="#Wsgi.Request.Request.getHeader">getHeader</a></code></li>
-<li><code><a title="Wsgi.Request.Request.getRequestBody" href="#Wsgi.Request.Request.getRequestBody">getRequestBody</a></code></li>
-<li><code><a title="Wsgi.Request.Request.has" href="#Wsgi.Request.Request.has">has</a></code></li>
-<li><code><a title="Wsgi.Request.Request.hasFile" href="#Wsgi.Request.Request.hasFile">hasFile</a></code></li>
-<li><code><a title="Wsgi.Request.Request.hasHeader" href="#Wsgi.Request.Request.hasHeader">hasHeader</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.env" href="#15Watt_Wsgi.Request.Request.env">env</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.envHasKey" href="#15Watt_Wsgi.Request.Request.envHasKey">envHasKey</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.get" href="#15Watt_Wsgi.Request.Request.get">get</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.getAsList" href="#15Watt_Wsgi.Request.Request.getAsList">getAsList</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.getDictParams" href="#15Watt_Wsgi.Request.Request.getDictParams">getDictParams</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.getDíctFiles" href="#15Watt_Wsgi.Request.Request.getDíctFiles">getDíctFiles</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.getEnvByKey" href="#15Watt_Wsgi.Request.Request.getEnvByKey">getEnvByKey</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.getFile" href="#15Watt_Wsgi.Request.Request.getFile">getFile</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.getHeader" href="#15Watt_Wsgi.Request.Request.getHeader">getHeader</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.getRequestBody" href="#15Watt_Wsgi.Request.Request.getRequestBody">getRequestBody</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.has" href="#15Watt_Wsgi.Request.Request.has">has</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.hasFile" href="#15Watt_Wsgi.Request.Request.hasFile">hasFile</a></code></li>
+<li><code><a title="15Watt_Wsgi.Request.Request.hasHeader" href="#15Watt_Wsgi.Request.Request.hasHeader">hasHeader</a></code></li>
 </ul>
 </li>
 </ul>

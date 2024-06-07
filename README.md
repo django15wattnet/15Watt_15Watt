@@ -1,20 +1,23 @@
-# Wsgi
+# 15Watt_Wsgi
 A slim, fast and comfortable WSGI-Framework for Python >= 3.6.  
-Testes with 3.10 + 3.12.  
-Uses https://github.com/defnull/multipart for handling the multipart/form-data requests instaed of cgi.FieldStorage.
+Tested with 3.10 + 3.12.  
+Uses https://github.com/defnull/multipart for handling the multipart/form-data requests instead of cgi.FieldStorage.
 
 ## Installation
-For now, no [pip-package](https://pypi.org/) is available.  
+### PIP
+```pip3 install 15Watt_Wsgi```
+
+### Git
 You can clone the [repository](https://github.com/django15wattnet/Wsgi) and
 install the package in a directory, from where you can import
 python packages. 
 ```
     cd /path/to/your/import/able/python/packages
-    git clone git@github.com:django15wattnet/Wsgi.git
+    git clone git@github.com:django15wattnet/15Watt_Wsgi.git
 ```
 
 ## SRC Documentation
-[See](https://github.com/django15wattnet/Wsgi/tree/main/docs/Wsgi)
+[See](https://github.com/django15wattnet/15Watt_Wsgi/tree/main/docs/Wsgi)
 
 ## Usage
 
@@ -71,7 +74,7 @@ Read the [mod_wsgi docu](https://modwsgi.readthedocs.io/en/master/configuration.
 Create a ```application.py``` file in ```/path/to/python/files```:
 ```  
 #!/usr/bin/env python
-from Wsgi.Kernel import Kernel
+from 15Watt_Wsgi.Kernel import Kernel
 
 kernel = None
 
@@ -93,7 +96,7 @@ Create a ```routes.py``` file in ```/path/to/python/files```:
 
 #### Example routes without parameters in the path
 ```
-from Wsgi.Route import Route, HttpMethods
+from 15Watt_Wsgi.Route import Route, HttpMethods
 
 routes = [
 	Route(
@@ -115,7 +118,7 @@ A request to ```/qcell``` will be handled by ```from QCell.StaticPagesController
 
 #### Example routes with parameters in the path
 ```
-from Wsgi.Route import Route, HttpMethods
+from 15Watt_Wsgi.Route import Route, HttpMethods
 
 routes = [
 	Route(
@@ -147,9 +150,9 @@ The controllers orchestrate the work to be done. Receive the request, do the wor
 
 #### A very simple example Controller
 ```
-from Wsgi.BaseController import BaseController
-from Wsgi.Request import Request
-from Wsgi.Response import Response
+from 15Watt_Wsgi.BaseController import BaseController
+from 15Watt_Wsgi.Request import Request
+from 15Watt_Wsgi.Response import Response
 
 
 class ExampleController(BaseController):
@@ -180,5 +183,4 @@ At this moment SqlObject is needed.
 ## ToDos
 - Make the use of [SqlObject](https://www.sqlobject.org/) optional
 - Change the language of the comments and documentation from german to english
-- Make a [pip-package](https://pypi.org/)
 - Write and test a configuration for [nginx](https://nginx.org/)

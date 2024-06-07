@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>Wsgi.Response API documentation</title>
+<title>15Watt_Wsgi.Response API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>Wsgi.Response</code></h1>
+<h1 class="title">Module <code>15Watt_Wsgi.Response</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -39,7 +39,7 @@ class ResponseCodeToText(object):
     200 -&gt; 200 OK
 
     401 -&gt; Unauthorized
-    
+
     ...
     &#34;&#34;&#34;
     __numToTxt = {
@@ -254,9 +254,9 @@ class Response(object):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="Wsgi.Response.Response"><code class="flex name class">
+<dt id="15Watt_Wsgi.Response.Response"><code class="flex name class">
 <span>class <span class="ident">Response</span></span>
-<span>(</span><span>request: <a title="Wsgi.Request.Request" href="Request.html#Wsgi.Request.Request">Request</a>, startResponse)</span>
+<span>(</span><span>request: 15Watt_Wsgi.Request.Request, startResponse)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Representation of the response, that is sent back to the web server</p></div>
@@ -374,7 +374,7 @@ class Response(object):
 </details>
 <h3>Instance variables</h3>
 <dl>
-<dt id="Wsgi.Response.Response.byteContent"><code class="name">var <span class="ident">byteContent</span> : bytes</code></dt>
+<dt id="15Watt_Wsgi.Response.Response.byteContent"><code class="name">var <span class="ident">byteContent</span> : bytes</code></dt>
 <dd>
 <div class="desc"></div>
 <details class="source">
@@ -386,7 +386,7 @@ def byteContent(self) -&gt; bytes:
     return self.__byteContent</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Response.Response.request"><code class="name">var <span class="ident">request</span> : <a title="Wsgi.Request.Request" href="Request.html#Wsgi.Request.Request">Request</a></code></dt>
+<dt id="15Watt_Wsgi.Response.Response.request"><code class="name">var <span class="ident">request</span> : 15Watt_Wsgi.Request.Request</code></dt>
 <dd>
 <div class="desc"></div>
 <details class="source">
@@ -398,7 +398,7 @@ def request(self) -&gt; Request:
     return self.__request</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Response.Response.stringContent"><code class="name">var <span class="ident">stringContent</span> : str</code></dt>
+<dt id="15Watt_Wsgi.Response.Response.stringContent"><code class="name">var <span class="ident">stringContent</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 <details class="source">
@@ -413,8 +413,8 @@ def stringContent(self) -&gt; str:
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="Wsgi.Response.Response.addCookie"><code class="name flex">
-<span>def <span class="ident">addCookie</span></span>(<span>self, cookie: <a title="Wsgi.Cookie.Cookie" href="Cookie.html#Wsgi.Cookie.Cookie">Cookie</a>)</span>
+<dt id="15Watt_Wsgi.Response.Response.addCookie"><code class="name flex">
+<span>def <span class="ident">addCookie</span></span>(<span>self, cookie: 15Watt_Wsgi.Cookie.Cookie)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Adds a cookie to the response.
@@ -432,7 +432,7 @@ A already added cookie is overwritten</p></div>
     return self</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Response.Response.addHeader"><code class="name flex">
+<dt id="15Watt_Wsgi.Response.Response.addHeader"><code class="name flex">
 <span>def <span class="ident">addHeader</span></span>(<span>self, key: str, value: str)</span>
 </code></dt>
 <dd>
@@ -451,7 +451,7 @@ An already added header is overwritten</p></div>
     return self</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Response.Response.getContent"><code class="name flex">
+<dt id="15Watt_Wsgi.Response.Response.getContent"><code class="name flex">
 <span>def <span class="ident">getContent</span></span>(<span>self) ‑> list[bytes]</span>
 </code></dt>
 <dd>
@@ -482,7 +482,7 @@ startResponse has been called before.
     return [self.__byteContent]</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.Response.Response.redirect"><code class="name flex">
+<dt id="15Watt_Wsgi.Response.Response.redirect"><code class="name flex">
 <span>def <span class="ident">redirect</span></span>(<span>self, url: str, code: int = 303) ‑> None</span>
 </code></dt>
 <dd>
@@ -501,7 +501,7 @@ startResponse has been called before.
 </dd>
 </dl>
 </dd>
-<dt id="Wsgi.Response.ResponseCodeToText"><code class="flex name class">
+<dt id="15Watt_Wsgi.Response.ResponseCodeToText"><code class="flex name class">
 <span>class <span class="ident">ResponseCodeToText</span></span>
 <span>(</span><span>respCode: int)</span>
 </code></dt>
@@ -523,7 +523,7 @@ string representation:</p>
     200 -&gt; 200 OK
 
     401 -&gt; Unauthorized
-    
+
     ...
     &#34;&#34;&#34;
     __numToTxt = {
@@ -619,7 +619,7 @@ string representation:</p>
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="Wsgi.Response.ResponseCodeToText.asText"><code class="name flex">
+<dt id="15Watt_Wsgi.Response.ResponseCodeToText.asText"><code class="name flex">
 <span>def <span class="ident">asText</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
@@ -653,27 +653,27 @@ string representation:</p>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="Wsgi" href="index.html">Wsgi</a></code></li>
+<li><code><a title="15Watt_Wsgi" href="index.html">15Watt_Wsgi</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="Wsgi.Response.Response" href="#Wsgi.Response.Response">Response</a></code></h4>
+<h4><code><a title="15Watt_Wsgi.Response.Response" href="#15Watt_Wsgi.Response.Response">Response</a></code></h4>
 <ul class="two-column">
-<li><code><a title="Wsgi.Response.Response.addCookie" href="#Wsgi.Response.Response.addCookie">addCookie</a></code></li>
-<li><code><a title="Wsgi.Response.Response.addHeader" href="#Wsgi.Response.Response.addHeader">addHeader</a></code></li>
-<li><code><a title="Wsgi.Response.Response.byteContent" href="#Wsgi.Response.Response.byteContent">byteContent</a></code></li>
-<li><code><a title="Wsgi.Response.Response.getContent" href="#Wsgi.Response.Response.getContent">getContent</a></code></li>
-<li><code><a title="Wsgi.Response.Response.redirect" href="#Wsgi.Response.Response.redirect">redirect</a></code></li>
-<li><code><a title="Wsgi.Response.Response.request" href="#Wsgi.Response.Response.request">request</a></code></li>
-<li><code><a title="Wsgi.Response.Response.stringContent" href="#Wsgi.Response.Response.stringContent">stringContent</a></code></li>
+<li><code><a title="15Watt_Wsgi.Response.Response.addCookie" href="#15Watt_Wsgi.Response.Response.addCookie">addCookie</a></code></li>
+<li><code><a title="15Watt_Wsgi.Response.Response.addHeader" href="#15Watt_Wsgi.Response.Response.addHeader">addHeader</a></code></li>
+<li><code><a title="15Watt_Wsgi.Response.Response.byteContent" href="#15Watt_Wsgi.Response.Response.byteContent">byteContent</a></code></li>
+<li><code><a title="15Watt_Wsgi.Response.Response.getContent" href="#15Watt_Wsgi.Response.Response.getContent">getContent</a></code></li>
+<li><code><a title="15Watt_Wsgi.Response.Response.redirect" href="#15Watt_Wsgi.Response.Response.redirect">redirect</a></code></li>
+<li><code><a title="15Watt_Wsgi.Response.Response.request" href="#15Watt_Wsgi.Response.Response.request">request</a></code></li>
+<li><code><a title="15Watt_Wsgi.Response.Response.stringContent" href="#15Watt_Wsgi.Response.Response.stringContent">stringContent</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="Wsgi.Response.ResponseCodeToText" href="#Wsgi.Response.ResponseCodeToText">ResponseCodeToText</a></code></h4>
+<h4><code><a title="15Watt_Wsgi.Response.ResponseCodeToText" href="#15Watt_Wsgi.Response.ResponseCodeToText">ResponseCodeToText</a></code></h4>
 <ul class="">
-<li><code><a title="Wsgi.Response.ResponseCodeToText.asText" href="#Wsgi.Response.ResponseCodeToText.asText">asText</a></code></li>
+<li><code><a title="15Watt_Wsgi.Response.ResponseCodeToText.asText" href="#15Watt_Wsgi.Response.ResponseCodeToText.asText">asText</a></code></li>
 </ul>
 </li>
 </ul>

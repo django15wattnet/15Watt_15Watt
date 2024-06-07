@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>Wsgi.multipart API documentation</title>
+<title>15Watt_Wsgi.multipart API documentation</title>
 <meta name="description" content="Parser for multipart/form-data
 …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -20,7 +20,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>Wsgi.multipart</code></h1>
+<h1 class="title">Module <code>15Watt_Wsgi.multipart</code></h1>
 </header>
 <section id="section-intro">
 <h2 id="parser-for-multipartform-data">Parser for multipart/form-data</h2>
@@ -574,7 +574,7 @@ def parse_form_data(environ, charset=&#34;utf8&#34;, strict=False, **kwargs):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="Wsgi.multipart.parse_form_data"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.parse_form_data"><code class="name flex">
 <span>def <span class="ident">parse_form_data</span></span>(<span>environ, charset='utf8', strict=False, **kwargs)</span>
 </code></dt>
 <dd>
@@ -582,12 +582,12 @@ def parse_form_data(environ, charset=&#34;utf8&#34;, strict=False, **kwargs):
 Both tuple values are dictionaries with the form-field name as a key
 (unicode) and lists as values (multiple values per key are possible).
 The forms-dictionary contains form-field values as unicode strings.
-The files-dictionary contains :class:<code><a title="Wsgi.multipart.MultipartPart" href="#Wsgi.multipart.MultipartPart">MultipartPart</a></code> instances, either
+The files-dictionary contains :class:<code><a title="15Watt_Wsgi.multipart.MultipartPart" href="#15Watt_Wsgi.multipart.MultipartPart">MultipartPart</a></code> instances, either
 because the form-field was a file-upload or the value is too big to fit
 into memory limits.</p>
 <p>:param environ: An WSGI environment dict.
 :param charset: The charset to use if unsure. (default: utf8)
-:param strict: If True, raise :exc:<code><a title="Wsgi.multipart.MultipartError" href="#Wsgi.multipart.MultipartError">MultipartError</a></code> on any parsing
+:param strict: If True, raise :exc:<code><a title="15Watt_Wsgi.multipart.MultipartError" href="#15Watt_Wsgi.multipart.MultipartError">MultipartError</a></code> on any parsing
 errors. These are silently ignored by default.</p></div>
 <details class="source">
 <summary>
@@ -670,7 +670,7 @@ errors. These are silently ignored by default.</p></div>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="Wsgi.multipart.MultipartError"><code class="flex name class">
+<dt id="15Watt_Wsgi.multipart.MultipartError"><code class="flex name class">
 <span>class <span class="ident">MultipartError</span></span>
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
@@ -690,7 +690,7 @@ errors. These are silently ignored by default.</p></div>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="Wsgi.multipart.MultipartParser"><code class="flex name class">
+<dt id="15Watt_Wsgi.multipart.MultipartParser"><code class="flex name class">
 <span>class <span class="ident">MultipartParser</span></span>
 <span>(</span><span>stream, boundary, content_length=-1, disk_limit=1073741824, mem_limit=1048576, memfile_limit=262144, buffer_size=65536, charset='latin1')</span>
 </code></dt>
@@ -880,7 +880,7 @@ over the parts of the message.</p>
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="Wsgi.multipart.MultipartParser.get"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartParser.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>self, name, default=None)</span>
 </code></dt>
 <dd>
@@ -898,7 +898,7 @@ over the parts of the message.</p>
     return default</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.multipart.MultipartParser.get_all"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartParser.get_all"><code class="name flex">
 <span>def <span class="ident">get_all</span></span>(<span>self, name)</span>
 </code></dt>
 <dd>
@@ -912,7 +912,7 @@ over the parts of the message.</p>
     return [p for p in self if p.name == name]</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.multipart.MultipartParser.parts"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartParser.parts"><code class="name flex">
 <span>def <span class="ident">parts</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -928,7 +928,7 @@ over the parts of the message.</p>
 </dd>
 </dl>
 </dd>
-<dt id="Wsgi.multipart.MultipartPart"><code class="flex name class">
+<dt id="15Watt_Wsgi.multipart.MultipartPart"><code class="flex name class">
 <span>class <span class="ident">MultipartPart</span></span>
 <span>(</span><span>buffer_size=65536, memfile_limit=262144, charset='latin1')</span>
 </code></dt>
@@ -1054,7 +1054,7 @@ over the parts of the message.</p>
 </details>
 <h3>Instance variables</h3>
 <dl>
-<dt id="Wsgi.multipart.MultipartPart.raw"><code class="name">var <span class="ident">raw</span></code></dt>
+<dt id="15Watt_Wsgi.multipart.MultipartPart.raw"><code class="name">var <span class="ident">raw</span></code></dt>
 <dd>
 <div class="desc"><p>Data without decoding</p></div>
 <details class="source">
@@ -1077,7 +1077,7 @@ def raw(self):
     return val</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.multipart.MultipartPart.value"><code class="name">var <span class="ident">value</span></code></dt>
+<dt id="15Watt_Wsgi.multipart.MultipartPart.value"><code class="name">var <span class="ident">value</span></code></dt>
 <dd>
 <div class="desc"><p>Data decoded with the specified charset</p></div>
 <details class="source">
@@ -1094,7 +1094,7 @@ def value(self):
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="Wsgi.multipart.MultipartPart.close"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartPart.close"><code class="name flex">
 <span>def <span class="ident">close</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -1109,7 +1109,7 @@ def value(self):
         self.file = False</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.multipart.MultipartPart.feed"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartPart.feed"><code class="name flex">
 <span>def <span class="ident">feed</span></span>(<span>self, line, nl='')</span>
 </code></dt>
 <dd>
@@ -1125,7 +1125,7 @@ def value(self):
     return self.write_header(line, nl)</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.multipart.MultipartPart.finish_header"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartPart.finish_header"><code class="name flex">
 <span>def <span class="ident">finish_header</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -1151,7 +1151,7 @@ def value(self):
     self.content_length = int(self.headers.get(&#34;Content-Length&#34;, &#34;-1&#34;))</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.multipart.MultipartPart.is_buffered"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartPart.is_buffered"><code class="name flex">
 <span>def <span class="ident">is_buffered</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -1165,7 +1165,7 @@ def value(self):
     return isinstance(self.file, BytesIO)</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.multipart.MultipartPart.save_as"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartPart.save_as"><code class="name flex">
 <span>def <span class="ident">save_as</span></span>(<span>self, path)</span>
 </code></dt>
 <dd>
@@ -1187,7 +1187,7 @@ def value(self):
     return size</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.multipart.MultipartPart.write_body"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartPart.write_body"><code class="name flex">
 <span>def <span class="ident">write_body</span></span>(<span>self, line, nl)</span>
 </code></dt>
 <dd>
@@ -1214,7 +1214,7 @@ def value(self):
         copy_file(old, self.file, self.size, self.buffer_size)</code></pre>
 </details>
 </dd>
-<dt id="Wsgi.multipart.MultipartPart.write_header"><code class="name flex">
+<dt id="15Watt_Wsgi.multipart.MultipartPart.write_header"><code class="name flex">
 <span>def <span class="ident">write_header</span></span>(<span>self, line, nl)</span>
 </code></dt>
 <dd>
@@ -1257,39 +1257,39 @@ def value(self):
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="Wsgi" href="index.html">Wsgi</a></code></li>
+<li><code><a title="15Watt_Wsgi" href="index.html">15Watt_Wsgi</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="Wsgi.multipart.parse_form_data" href="#Wsgi.multipart.parse_form_data">parse_form_data</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.parse_form_data" href="#15Watt_Wsgi.multipart.parse_form_data">parse_form_data</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="Wsgi.multipart.MultipartError" href="#Wsgi.multipart.MultipartError">MultipartError</a></code></h4>
+<h4><code><a title="15Watt_Wsgi.multipart.MultipartError" href="#15Watt_Wsgi.multipart.MultipartError">MultipartError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="Wsgi.multipart.MultipartParser" href="#Wsgi.multipart.MultipartParser">MultipartParser</a></code></h4>
+<h4><code><a title="15Watt_Wsgi.multipart.MultipartParser" href="#15Watt_Wsgi.multipart.MultipartParser">MultipartParser</a></code></h4>
 <ul class="">
-<li><code><a title="Wsgi.multipart.MultipartParser.get" href="#Wsgi.multipart.MultipartParser.get">get</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartParser.get_all" href="#Wsgi.multipart.MultipartParser.get_all">get_all</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartParser.parts" href="#Wsgi.multipart.MultipartParser.parts">parts</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartParser.get" href="#15Watt_Wsgi.multipart.MultipartParser.get">get</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartParser.get_all" href="#15Watt_Wsgi.multipart.MultipartParser.get_all">get_all</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartParser.parts" href="#15Watt_Wsgi.multipart.MultipartParser.parts">parts</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="Wsgi.multipart.MultipartPart" href="#Wsgi.multipart.MultipartPart">MultipartPart</a></code></h4>
+<h4><code><a title="15Watt_Wsgi.multipart.MultipartPart" href="#15Watt_Wsgi.multipart.MultipartPart">MultipartPart</a></code></h4>
 <ul class="two-column">
-<li><code><a title="Wsgi.multipart.MultipartPart.close" href="#Wsgi.multipart.MultipartPart.close">close</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartPart.feed" href="#Wsgi.multipart.MultipartPart.feed">feed</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartPart.finish_header" href="#Wsgi.multipart.MultipartPart.finish_header">finish_header</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartPart.is_buffered" href="#Wsgi.multipart.MultipartPart.is_buffered">is_buffered</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartPart.raw" href="#Wsgi.multipart.MultipartPart.raw">raw</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartPart.save_as" href="#Wsgi.multipart.MultipartPart.save_as">save_as</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartPart.value" href="#Wsgi.multipart.MultipartPart.value">value</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartPart.write_body" href="#Wsgi.multipart.MultipartPart.write_body">write_body</a></code></li>
-<li><code><a title="Wsgi.multipart.MultipartPart.write_header" href="#Wsgi.multipart.MultipartPart.write_header">write_header</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartPart.close" href="#15Watt_Wsgi.multipart.MultipartPart.close">close</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartPart.feed" href="#15Watt_Wsgi.multipart.MultipartPart.feed">feed</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartPart.finish_header" href="#15Watt_Wsgi.multipart.MultipartPart.finish_header">finish_header</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartPart.is_buffered" href="#15Watt_Wsgi.multipart.MultipartPart.is_buffered">is_buffered</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartPart.raw" href="#15Watt_Wsgi.multipart.MultipartPart.raw">raw</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartPart.save_as" href="#15Watt_Wsgi.multipart.MultipartPart.save_as">save_as</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartPart.value" href="#15Watt_Wsgi.multipart.MultipartPart.value">value</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartPart.write_body" href="#15Watt_Wsgi.multipart.MultipartPart.write_body">write_body</a></code></li>
+<li><code><a title="15Watt_Wsgi.multipart.MultipartPart.write_header" href="#15Watt_Wsgi.multipart.MultipartPart.write_header">write_header</a></code></li>
 </ul>
 </li>
 </ul>
