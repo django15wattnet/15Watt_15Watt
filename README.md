@@ -1,6 +1,6 @@
 # Wsgi
 A slim, fast and comfortable WSGI-Framework for Python >= 3.6.  
-Testes with 3.10 + 3.12.
+Testes with 3.10 + 3.12.  
 Uses https://github.com/defnull/multipart for handling the multipart/form-data requests instaed of cgi.FieldStorage.
 
 ## Installation
@@ -14,6 +14,7 @@ python packages.
 ```
 
 ## SRC Documentation
+[See](https://github.com/django15wattnet/Wsgi/tree/main/docs/Wsgi)
 
 ## Usage
 

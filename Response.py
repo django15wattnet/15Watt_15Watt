@@ -11,7 +11,7 @@ class ResponseCodeToText(object):
     200 -> 200 OK
 
     401 -> Unauthorized
-    
+
     ...
     """
     __numToTxt = {
