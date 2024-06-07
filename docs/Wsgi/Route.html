@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>Wsgi.Route API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Wsgi.Route</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from enum import Enum
+from importlib import import_module
+import re
+from .Exceptions import NotAllowedHttpMethod, InvalidData
+
+
+class HttpMethods(Enum):
+    &#34;&#34;&#34;
+        Die erlaubten HTTP-Methoden
+    &#34;&#34;&#34;
+    GET      = 1
+    POST     = 2
+    PUT      = 3
+    PATCH    = 4
+    DELETE   = 5
+    COPY     = 6
+    HEAD     = 7
+    OPTIONS  = 8
+    LINK     = 9
+    UNLINK   = 10
+    PURGE    = 11
+    LOCK     = 12
+    PROPFIND = 13
+    VIEW     = 14
+
+
+class Route(object):
+    &#34;&#34;&#34;
+    The route is the connection between the path and the called controller method
+    &#34;&#34;&#34;
+    def __init__(
+            self,
+            path: str,
+            nameController: str,
+            nameMethod: str,
+            httpMethod: HttpMethods,
+            paramsDef: dict = None
+    ):
+
+        if httpMethod not in HttpMethods:
+            raise NotAllowedHttpMethod(returnMsg=httpMethod.name)
+
+        self.__path                = path
+        self.__nameControllerParts = nameController.split(&#39;.&#39;)
+        self.__nameMethod          = nameMethod
+        self.__methodToCall        = None
+        self.__httpMethod          = httpMethod
+        self.__dictParamsDef       = paramsDef
+        self.__pathRegEx           = self.__buildPathRegEx()
+
+        if paramsDef is None:
+            self.__dictParamsDef = {}
+        else:
+            self.__config = paramsDef
+
+
+    @property
+    def path(self) -&gt; str:
+        &#34;&#34;&#34;
+        Returns the path defined in the route.
+        &#34;&#34;&#34;
+        return self.__path
+
+
+    @property
+    def methodToCall(self):
+        &#34;&#34;&#34;
+        Returns the method to call.
+        &#34;&#34;&#34;
+        if self.__methodToCall is None:
+            self.__methodToCall = self.__buildMethod()
+
+        return self.__methodToCall
+
+
+    @property
+    def httpMethod(self) -&gt; HttpMethods:
+        &#34;&#34;&#34;
+        Returns the HTTP-method
+        &#34;&#34;&#34;
+        return self.__httpMethod
+
+
+    @property
+    def pathRegEx(self) -&gt; str:
+        &#34;&#34;&#34;
+        Returns the RegEx-String to match the route
+        &#34;&#34;&#34;
+        return self.__pathRegEx
+
+
+    def setConfig(self, config: dict):
+        &#34;&#34;&#34;
+        Set the configuration from project root config.py for the route
+        &#34;&#34;&#34;
+        self.__config = config
+
+
+    def match(self, path: str, httpMethod: HttpMethods) -&gt; bool:
+        &#34;&#34;&#34;
+        Checks if the route matches path and httpMethod
+        &#34;&#34;&#34;
+        if httpMethod != self.__httpMethod:
+            return False
+
+        return re.match(f&#39;^{self.__pathRegEx}$&#39;, path) is not None
+
+
+    def getParamsFromPath(self, path: str) -&gt; dict:
+        &#34;&#34;&#34;
+            Returns the parameters from the path
+        &#34;&#34;&#34;
+        matches = re.match(self.__pathRegEx, path)
+        if matches is None:
+            return {}
+
+        paramsFromPath = {}
+        for placeHolder in self.__dictParamsDef:
+            if &#39;str&#39; == self.__dictParamsDef[placeHolder]:
+                paramsFromPath[placeHolder] = matches.group(placeHolder)
+            elif &#39;int&#39; == self.__dictParamsDef[placeHolder]:
+                paramsFromPath[placeHolder] = int(matches.group(placeHolder))
+
+        return paramsFromPath
+
+
+    def __buildMethod(self):
+        &#34;&#34;&#34;
+        Build the callable method, that will be call for the route
+        &#34;&#34;&#34;
+        nameModule = &#39;.&#39;.join(self.__nameControllerParts[:-1])
+        nameClass  = self.__nameControllerParts[-1]
+        module     = import_module(name=nameModule)
+        inst       = getattr(module, nameClass)(config=self.__config)
+
+        return getattr(inst, self.__nameMethod)
+
+
+    def __buildPathRegEx(self):
+        &#34;&#34;&#34;
+        Build the RegEx-String to match the route
+        &#34;&#34;&#34;
+        strPathRegEx = self.__path
+
+        for placeHolder in re.findall(r&#39;\{[\w]{1,}\}&#39;, strPathRegEx):
+            placeHolderPlain = placeHolder.strip(&#39;{}&#39;)
+
+            if placeHolderPlain not in self.__dictParamsDef:
+                raise InvalidData(returnMsg=f&#39;Parameter &#34;{placeHolderPlain}&#34; not defined in paramsDef. Route = {self.__path}&#39;)
+
+            if &#39;str&#39; == self.__dictParamsDef[placeHolderPlain]:
+                to = &#34;(?P&lt;{n}&gt;\\w{{1,}})&#34;.format(n=placeHolderPlain)
+            elif &#39;int&#39; == self.__dictParamsDef[placeHolderPlain]:
+                to = &#34;(?P&lt;{n}&gt;[0-9]{{1,}})&#34;.format(n=placeHolderPlain)
+            else:
+                raise InvalidData(returnMsg=f&#39;Not allowed data type: {self.__dictParamsDef[placeHolderPlain]}&#39;)
+
+            strPathRegEx = strPathRegEx.replace(placeHolder, to)
+
+        return strPathRegEx
+
+
+    def __str__(self):
+        return f&#39;Route - Path={self.__path} {self.__httpMethod.name} {&#34;.&#34;.join(self.__nameControllerParts)}.{self.__nameMethod}&#39;</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="Wsgi.Route.HttpMethods"><code class="flex name class">
+<span>class <span class="ident">HttpMethods</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Die erlaubten HTTP-Methoden</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HttpMethods(Enum):
+    &#34;&#34;&#34;
+        Die erlaubten HTTP-Methoden
+    &#34;&#34;&#34;
+    GET      = 1
+    POST     = 2
+    PUT      = 3
+    PATCH    = 4
+    DELETE   = 5
+    COPY     = 6
+    HEAD     = 7
+    OPTIONS  = 8
+    LINK     = 9
+    UNLINK   = 10
+    PURGE    = 11
+    LOCK     = 12
+    PROPFIND = 13
+    VIEW     = 14</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="Wsgi.Route.HttpMethods.COPY"><code class="name">var <span class="ident">COPY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.DELETE"><code class="name">var <span class="ident">DELETE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.GET"><code class="name">var <span class="ident">GET</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.HEAD"><code class="name">var <span class="ident">HEAD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.LINK"><code class="name">var <span class="ident">LINK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.LOCK"><code class="name">var <span class="ident">LOCK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.OPTIONS"><code class="name">var <span class="ident">OPTIONS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.PATCH"><code class="name">var <span class="ident">PATCH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.POST"><code class="name">var <span class="ident">POST</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.PROPFIND"><code class="name">var <span class="ident">PROPFIND</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.PURGE"><code class="name">var <span class="ident">PURGE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.PUT"><code class="name">var <span class="ident">PUT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.UNLINK"><code class="name">var <span class="ident">UNLINK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Wsgi.Route.HttpMethods.VIEW"><code class="name">var <span class="ident">VIEW</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="Wsgi.Route.Route"><code class="flex name class">
+<span>class <span class="ident">Route</span></span>
+<span>(</span><span>path: str, nameController: str, nameMethod: str, httpMethod: <a title="Wsgi.Route.HttpMethods" href="#Wsgi.Route.HttpMethods">HttpMethods</a>, paramsDef: dict = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The route is the connection between the path and the called controller method</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Route(object):
+    &#34;&#34;&#34;
+    The route is the connection between the path and the called controller method
+    &#34;&#34;&#34;
+    def __init__(
+            self,
+            path: str,
+            nameController: str,
+            nameMethod: str,
+            httpMethod: HttpMethods,
+            paramsDef: dict = None
+    ):
+
+        if httpMethod not in HttpMethods:
+            raise NotAllowedHttpMethod(returnMsg=httpMethod.name)
+
+        self.__path                = path
+        self.__nameControllerParts = nameController.split(&#39;.&#39;)
+        self.__nameMethod          = nameMethod
+        self.__methodToCall        = None
+        self.__httpMethod          = httpMethod
+        self.__dictParamsDef       = paramsDef
+        self.__pathRegEx           = self.__buildPathRegEx()
+
+        if paramsDef is None:
+            self.__dictParamsDef = {}
+        else:
+            self.__config = paramsDef
+
+
+    @property
+    def path(self) -&gt; str:
+        &#34;&#34;&#34;
+        Returns the path defined in the route.
+        &#34;&#34;&#34;
+        return self.__path
+
+
+    @property
+    def methodToCall(self):
+        &#34;&#34;&#34;
+        Returns the method to call.
+        &#34;&#34;&#34;
+        if self.__methodToCall is None:
+            self.__methodToCall = self.__buildMethod()
+
+        return self.__methodToCall
+
+
+    @property
+    def httpMethod(self) -&gt; HttpMethods:
+        &#34;&#34;&#34;
+        Returns the HTTP-method
+        &#34;&#34;&#34;
+        return self.__httpMethod
+
+
+    @property
+    def pathRegEx(self) -&gt; str:
+        &#34;&#34;&#34;
+        Returns the RegEx-String to match the route
+        &#34;&#34;&#34;
+        return self.__pathRegEx
+
+
+    def setConfig(self, config: dict):
+        &#34;&#34;&#34;
+        Set the configuration from project root config.py for the route
+        &#34;&#34;&#34;
+        self.__config = config
+
+
+    def match(self, path: str, httpMethod: HttpMethods) -&gt; bool:
+        &#34;&#34;&#34;
+        Checks if the route matches path and httpMethod
+        &#34;&#34;&#34;
+        if httpMethod != self.__httpMethod:
+            return False
+
+        return re.match(f&#39;^{self.__pathRegEx}$&#39;, path) is not None
+
+
+    def getParamsFromPath(self, path: str) -&gt; dict:
+        &#34;&#34;&#34;
+            Returns the parameters from the path
+        &#34;&#34;&#34;
+        matches = re.match(self.__pathRegEx, path)
+        if matches is None:
+            return {}
+
+        paramsFromPath = {}
+        for placeHolder in self.__dictParamsDef:
+            if &#39;str&#39; == self.__dictParamsDef[placeHolder]:
+                paramsFromPath[placeHolder] = matches.group(placeHolder)
+            elif &#39;int&#39; == self.__dictParamsDef[placeHolder]:
+                paramsFromPath[placeHolder] = int(matches.group(placeHolder))
+
+        return paramsFromPath
+
+
+    def __buildMethod(self):
+        &#34;&#34;&#34;
+        Build the callable method, that will be call for the route
+        &#34;&#34;&#34;
+        nameModule = &#39;.&#39;.join(self.__nameControllerParts[:-1])
+        nameClass  = self.__nameControllerParts[-1]
+        module     = import_module(name=nameModule)
+        inst       = getattr(module, nameClass)(config=self.__config)
+
+        return getattr(inst, self.__nameMethod)
+
+
+    def __buildPathRegEx(self):
+        &#34;&#34;&#34;
+        Build the RegEx-String to match the route
+        &#34;&#34;&#34;
+        strPathRegEx = self.__path
+
+        for placeHolder in re.findall(r&#39;\{[\w]{1,}\}&#39;, strPathRegEx):
+            placeHolderPlain = placeHolder.strip(&#39;{}&#39;)
+
+            if placeHolderPlain not in self.__dictParamsDef:
+                raise InvalidData(returnMsg=f&#39;Parameter &#34;{placeHolderPlain}&#34; not defined in paramsDef. Route = {self.__path}&#39;)
+
+            if &#39;str&#39; == self.__dictParamsDef[placeHolderPlain]:
+                to = &#34;(?P&lt;{n}&gt;\\w{{1,}})&#34;.format(n=placeHolderPlain)
+            elif &#39;int&#39; == self.__dictParamsDef[placeHolderPlain]:
+                to = &#34;(?P&lt;{n}&gt;[0-9]{{1,}})&#34;.format(n=placeHolderPlain)
+            else:
+                raise InvalidData(returnMsg=f&#39;Not allowed data type: {self.__dictParamsDef[placeHolderPlain]}&#39;)
+
+            strPathRegEx = strPathRegEx.replace(placeHolder, to)
+
+        return strPathRegEx
+
+
+    def __str__(self):
+        return f&#39;Route - Path={self.__path} {self.__httpMethod.name} {&#34;.&#34;.join(self.__nameControllerParts)}.{self.__nameMethod}&#39;</code></pre>
+</details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="Wsgi.Route.Route.httpMethod"><code class="name">var <span class="ident">httpMethod</span> : <a title="Wsgi.Route.HttpMethods" href="#Wsgi.Route.HttpMethods">HttpMethods</a></code></dt>
+<dd>
+<div class="desc"><p>Returns the HTTP-method</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def httpMethod(self) -&gt; HttpMethods:
+    &#34;&#34;&#34;
+    Returns the HTTP-method
+    &#34;&#34;&#34;
+    return self.__httpMethod</code></pre>
+</details>
+</dd>
+<dt id="Wsgi.Route.Route.methodToCall"><code class="name">var <span class="ident">methodToCall</span></code></dt>
+<dd>
+<div class="desc"><p>Returns the method to call.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def methodToCall(self):
+    &#34;&#34;&#34;
+    Returns the method to call.
+    &#34;&#34;&#34;
+    if self.__methodToCall is None:
+        self.__methodToCall = self.__buildMethod()
+
+    return self.__methodToCall</code></pre>
+</details>
+</dd>
+<dt id="Wsgi.Route.Route.path"><code class="name">var <span class="ident">path</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Returns the path defined in the route.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def path(self) -&gt; str:
+    &#34;&#34;&#34;
+    Returns the path defined in the route.
+    &#34;&#34;&#34;
+    return self.__path</code></pre>
+</details>
+</dd>
+<dt id="Wsgi.Route.Route.pathRegEx"><code class="name">var <span class="ident">pathRegEx</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Returns the RegEx-String to match the route</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def pathRegEx(self) -&gt; str:
+    &#34;&#34;&#34;
+    Returns the RegEx-String to match the route
+    &#34;&#34;&#34;
+    return self.__pathRegEx</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="Wsgi.Route.Route.getParamsFromPath"><code class="name flex">
+<span>def <span class="ident">getParamsFromPath</span></span>(<span>self, path: str) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the parameters from the path</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getParamsFromPath(self, path: str) -&gt; dict:
+    &#34;&#34;&#34;
+        Returns the parameters from the path
+    &#34;&#34;&#34;
+    matches = re.match(self.__pathRegEx, path)
+    if matches is None:
+        return {}
+
+    paramsFromPath = {}
+    for placeHolder in self.__dictParamsDef:
+        if &#39;str&#39; == self.__dictParamsDef[placeHolder]:
+            paramsFromPath[placeHolder] = matches.group(placeHolder)
+        elif &#39;int&#39; == self.__dictParamsDef[placeHolder]:
+            paramsFromPath[placeHolder] = int(matches.group(placeHolder))
+
+    return paramsFromPath</code></pre>
+</details>
+</dd>
+<dt id="Wsgi.Route.Route.match"><code class="name flex">
+<span>def <span class="ident">match</span></span>(<span>self, path: str, httpMethod: <a title="Wsgi.Route.HttpMethods" href="#Wsgi.Route.HttpMethods">HttpMethods</a>) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the route matches path and httpMethod</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def match(self, path: str, httpMethod: HttpMethods) -&gt; bool:
+    &#34;&#34;&#34;
+    Checks if the route matches path and httpMethod
+    &#34;&#34;&#34;
+    if httpMethod != self.__httpMethod:
+        return False
+
+    return re.match(f&#39;^{self.__pathRegEx}$&#39;, path) is not None</code></pre>
+</details>
+</dd>
+<dt id="Wsgi.Route.Route.setConfig"><code class="name flex">
+<span>def <span class="ident">setConfig</span></span>(<span>self, config: dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the configuration from project root config.py for the route</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setConfig(self, config: dict):
+    &#34;&#34;&#34;
+    Set the configuration from project root config.py for the route
+    &#34;&#34;&#34;
+    self.__config = config</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="Wsgi" href="index.html">Wsgi</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="Wsgi.Route.HttpMethods" href="#Wsgi.Route.HttpMethods">HttpMethods</a></code></h4>
+<ul class="two-column">
+<li><code><a title="Wsgi.Route.HttpMethods.COPY" href="#Wsgi.Route.HttpMethods.COPY">COPY</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.DELETE" href="#Wsgi.Route.HttpMethods.DELETE">DELETE</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.GET" href="#Wsgi.Route.HttpMethods.GET">GET</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.HEAD" href="#Wsgi.Route.HttpMethods.HEAD">HEAD</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.LINK" href="#Wsgi.Route.HttpMethods.LINK">LINK</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.LOCK" href="#Wsgi.Route.HttpMethods.LOCK">LOCK</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.OPTIONS" href="#Wsgi.Route.HttpMethods.OPTIONS">OPTIONS</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.PATCH" href="#Wsgi.Route.HttpMethods.PATCH">PATCH</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.POST" href="#Wsgi.Route.HttpMethods.POST">POST</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.PROPFIND" href="#Wsgi.Route.HttpMethods.PROPFIND">PROPFIND</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.PURGE" href="#Wsgi.Route.HttpMethods.PURGE">PURGE</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.PUT" href="#Wsgi.Route.HttpMethods.PUT">PUT</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.UNLINK" href="#Wsgi.Route.HttpMethods.UNLINK">UNLINK</a></code></li>
+<li><code><a title="Wsgi.Route.HttpMethods.VIEW" href="#Wsgi.Route.HttpMethods.VIEW">VIEW</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="Wsgi.Route.Route" href="#Wsgi.Route.Route">Route</a></code></h4>
+<ul class="two-column">
+<li><code><a title="Wsgi.Route.Route.getParamsFromPath" href="#Wsgi.Route.Route.getParamsFromPath">getParamsFromPath</a></code></li>
+<li><code><a title="Wsgi.Route.Route.httpMethod" href="#Wsgi.Route.Route.httpMethod">httpMethod</a></code></li>
+<li><code><a title="Wsgi.Route.Route.match" href="#Wsgi.Route.Route.match">match</a></code></li>
+<li><code><a title="Wsgi.Route.Route.methodToCall" href="#Wsgi.Route.Route.methodToCall">methodToCall</a></code></li>
+<li><code><a title="Wsgi.Route.Route.path" href="#Wsgi.Route.Route.path">path</a></code></li>
+<li><code><a title="Wsgi.Route.Route.pathRegEx" href="#Wsgi.Route.Route.pathRegEx">pathRegEx</a></code></li>
+<li><code><a title="Wsgi.Route.Route.setConfig" href="#Wsgi.Route.Route.setConfig">setConfig</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -4,7 +4,6 @@ import re
 from .Exceptions import NotAllowedHttpMethod, InvalidData
 
 
-
 class HttpMethods(Enum):
     """
         Die erlaubten HTTP-Methoden
@@ -27,8 +26,7 @@ class HttpMethods(Enum):
 
 class Route(object):
     """
-        Verknüpfung zwischen Pfad und AdmController-Methode
-        todo Routen mit Parametern ermöglichen. Siehe: regExe_fuer_routen_mit_parametern.py
+    The route is the connection between the path and the called controller method
     """
     def __init__(
             self,
@@ -36,11 +34,11 @@ class Route(object):
             nameController: str,
             nameMethod: str,
             httpMethod: HttpMethods,
-            paramsDef: dict = {}
+            paramsDef: dict = None
     ):
 
         if httpMethod not in HttpMethods:
-            raise NotAllowedHttpMethod(httpMethod)
+            raise NotAllowedHttpMethod(returnMsg=httpMethod.name)
 
         self.__path                = path
         self.__nameControllerParts = nameController.split('.')
@@ -49,16 +47,26 @@ class Route(object):
         self.__httpMethod          = httpMethod
         self.__dictParamsDef       = paramsDef
         self.__pathRegEx           = self.__buildPathRegEx()
-        self.__config              = {}
+
+        if paramsDef is None:
+            self.__dictParamsDef = {}
+        else:
+            self.__config = paramsDef
 
 
     @property
-    def path(self):
+    def path(self) -> str:
+        """
+        Returns the path defined in the route.
+        """
         return self.__path
 
 
     @property
     def methodToCall(self):
+        """
+        Returns the method to call.
+        """
         if self.__methodToCall is None:
             self.__methodToCall = self.__buildMethod()
 
@@ -66,24 +74,32 @@ class Route(object):
 
 
     @property
-    def httpMethod(self):
+    def httpMethod(self) -> HttpMethods:
         """
-
-        :return: HttpMethods
+        Returns the HTTP-method
         """
         return self.__httpMethod
 
 
     @property
-    def pathRegEx(self):
+    def pathRegEx(self) -> str:
+        """
+        Returns the RegEx-String to match the route
+        """
         return self.__pathRegEx
 
 
     def setConfig(self, config: dict):
+        """
+        Set the configuration from project root config.py for the route
+        """
         self.__config = config
 
 
     def match(self, path: str, httpMethod: HttpMethods) -> bool:
+        """
+        Checks if the route matches path and httpMethod
+        """
         if httpMethod != self.__httpMethod:
             return False
 
@@ -92,7 +108,7 @@ class Route(object):
 
     def getParamsFromPath(self, path: str) -> dict:
         """
-            Liefert die Parameter aus dem Pfad
+            Returns the parameters from the path
         """
         matches = re.match(self.__pathRegEx, path)
         if matches is None:
@@ -109,6 +125,9 @@ class Route(object):
 
 
     def __buildMethod(self):
+        """
+        Build the callable method, that will be call for the route
+        """
         nameModule = '.'.join(self.__nameControllerParts[:-1])
         nameClass  = self.__nameControllerParts[-1]
         module     = import_module(name=nameModule)
@@ -119,7 +138,7 @@ class Route(object):
 
     def __buildPathRegEx(self):
         """
-            Baut den RegEx-String zum matchen der Route
+        Build the RegEx-String to match the route
         """
         strPathRegEx = self.__path
 
@@ -127,14 +146,14 @@ class Route(object):
             placeHolderPlain = placeHolder.strip('{}')
 
             if placeHolderPlain not in self.__dictParamsDef:
-                raise InvalidData(f'Parameter "{placeHolderPlain}" not defined in paramsDef. Route = {self.__path}')
+                raise InvalidData(returnMsg=f'Parameter "{placeHolderPlain}" not defined in paramsDef. Route = {self.__path}')
 
             if 'str' == self.__dictParamsDef[placeHolderPlain]:
                 to = "(?P<{n}>\\w{{1,}})".format(n=placeHolderPlain)
             elif 'int' == self.__dictParamsDef[placeHolderPlain]:
                 to = "(?P<{n}>[0-9]{{1,}})".format(n=placeHolderPlain)
             else:
-                raise InvalidData(f'Not allowed data type: {self.__dictParamsDef[placeHolderPlain]}')
+                raise InvalidData(returnMsg=f'Not allowed data type: {self.__dictParamsDef[placeHolderPlain]}')
 
             strPathRegEx = strPathRegEx.replace(placeHolder, to)
 

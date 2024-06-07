@@ -5,11 +5,14 @@ from .Cookie import Cookie
 
 class ResponseCodeToText(object):
     """
-        Translates the web servers numeric response code to its
-        string representation:
-        200 -> 200 OK
-        401 -> Unauthorized
-        ...
+    Translates the web servers numeric response code to its
+    string representation:
+
+    200 -> 200 OK
+
+    401 -> Unauthorized
+    
+    ...
     """
     __numToTxt = {
         100: 'Continue',
@@ -80,9 +83,6 @@ class ResponseCodeToText(object):
         513: 'The Server Is In A Bad Mood'
     }
 
-    # The response code this instance represents
-    __responseCode = 200
-
 
     def __init__(self, respCode: int):
         if respCode not in self.__numToTxt:
@@ -110,7 +110,7 @@ class ResponseCodeToText(object):
 
 class Response(object):
     """
-        Response, that is sent back to the web server
+        Representation of the response, that is sent back to the web server
     """
     def __init__(self, request: Request, startResponse):
         self.__request       = request
@@ -215,4 +215,3 @@ class Response(object):
             arrHeader.append(('Set-Cookie', str(self.__arrCookies[key])))
 
         return arrHeader
-

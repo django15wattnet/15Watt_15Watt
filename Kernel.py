@@ -3,7 +3,8 @@ from importlib import import_module
 from sqlobject import *
 from .Request import Request
 from .Response import Response
-from .Route import Route, HttpMethods
+from .Route import HttpMethods
+from .Exceptions import Base
 
 
 class Kernel(object):
@@ -11,6 +12,15 @@ class Kernel(object):
 		Handles the complete request to response cycle.
 	"""
 	def __init__(self, nameConfig: str = 'config', nameRoutes: str = 'routes'):
+		"""
+		Sets the names of the configuration and routes files.
+
+		These files are expected to be in the project root.
+
+		:param nameConfig: str
+
+		:param nameRoutes: str
+		"""
 
 		self.__nameConfig = nameConfig
 		self.__nameRoutes = nameRoutes
@@ -25,92 +35,66 @@ class Kernel(object):
 
 	def run(self, env: dict, startResponse):
 		"""
-			Handles to whole request
+			Handles to whole request.
+
+			Will be called by your application.py
 		"""
+		# Only needed for the __str__ method and debug purposes. DO NOT USE!
 		self.__env = env
 
-		# Find the controller and method, for a route without parameters
-		keyRoute = env.get('REQUEST_METHOD') + '_' + env.get('PATH_INFO')
+		# Iterate over all routes
+		for idx in self.__routes:
+			if not self.__routes[idx].match(path=env.get('PATH_INFO'), httpMethod=HttpMethods[env.get('REQUEST_METHOD')]):
+				continue
 
-		if keyRoute in self.__routes:
 			# Found, so I call the controller method
-			# Create a request instance
-			request = Request(env=env, paramsFromRoute={})
+			request = Request(
+				env=env,
+				paramsFromRoute=self.__routes[idx].getParamsFromPath(path=env.get('PATH_INFO'))
+			)
 
-			# Create a response instance
 			response = Response(
 				startResponse=startResponse,
 				request=request
 			)
 
-			response.addHeader('X-FRAMEWORK', 'Wsgi by Thomas Siemion')
+			response.addHeader('X-Framework', 'Wsgi by Thomas Siemion')
+			self.__addAccessControlHeader(request=request, response=response)
 
+			# Call the controller method
 			try:
-				self.__addAccessControlHeader(request=request, response=response)
-
-				self.__routes[keyRoute].methodToCall(
+				self.__routes[idx].methodToCall(
 					request=request,
 					response=response
 				)
+
 			except Exception as e:
 				if 'debug' in self.__config and self.__config['debug'] is True:
 					tb = traceback.format_exc()
 				else:
 					tb = ''
 
-				response.returnCode = 500
-				response.stringContent = 'Internal server _error.\n{tb}'.format(tb=tb)
+				if issubclass(type(e), Base):
+					response.returnCode    = e.returnCode
+					response.stringContent = e.returnMsg
+				else:
+					response.returnCode    = 500
+					response.stringContent = f'Internal server _error.\n{tb}'
+
 				response.contentType = 'text/plain'
-				response.charset = 'utf-8'
+				response.charset     = 'utf-8'
 
 			return response.getContent()
 
-		# It has to be a route with parameters
-		# Iterate over all routes
-		for idx in self.__routes:
-			if self.__routes[idx].match(path=env.get('PATH_INFO'), httpMethod=HttpMethods[env.get('REQUEST_METHOD')]):
-				request = Request(
-					env=env,
-					paramsFromRoute=self.__routes[idx].getParamsFromPath(path=env.get('PATH_INFO'))
-				)
-				response = Response(
-					startResponse=startResponse,
-					request=request
-				)
-
-				# Call the controller method
-				try:
-					self.__routes[idx].methodToCall(
-						request=request,
-						response=response
-					)
-
-					self.__addAccessControlHeader(request=request, response=response)
-
-				except Exception as e:
-					if 'debug' in self.__config and self.__config['debug'] is True:
-						tb = traceback.format_exc()
-					else:
-						tb = ''
-
-					response.returnCode = 500
-					response.stringContent = f'Internal server _error.\n{tb}'
-					response.contentType = 'text/plain'
-					response.charset = 'utf-8'
-
-				return response.getContent()
-
-
 		# No matching route found
-		# todo Error-Controller erstellen
-		request = Request(env=env)
+		# todo create a Error-Controller
 		response = Response(
 			startResponse=startResponse,
-			request=request
+			request=Request(env=env, paramsFromRoute={})
 		)
 
 		response.returnCode    = 404
-		response.stringContent = f'No controller method found for route: {keyRoute}'
+		response.stringContent = f"No controller method found for route: {env.get('REQUEST_METHOD')}_{env.get('PATH_INFO')}"
 		response.contentType   = 'text/plain'
 		response.charset       = 'utf-8'
 
@@ -119,7 +103,7 @@ class Kernel(object):
 
 	def __loadConfig(self):
 		"""
-			Reads the variables from project root.config.py
+			Reads the variables from project root config.py
 		:return:
 		"""
 		config = import_module(name=self.__nameConfig)
@@ -134,8 +118,8 @@ class Kernel(object):
 
 	def __connectToDatabase(self):
 		"""
-			If the key uriDb is present in the config, a database connection
-			will be established.
+			If the key uriDb is present in the project root config.py, a SqlObject
+			database connection will be established.
 		:return:
 		"""
 		if 'uriDb' not in self.__config:
@@ -148,7 +132,8 @@ class Kernel(object):
 
 	def __loadRoutes(self):
 		"""
-			Loads all routes and injects the configuration to them
+			Loads and creates all routes from project root routes.py
+			and injects the configuration to them.
 		:return:
 		"""
 		module = import_module(name=self.__nameRoutes)
@@ -159,6 +144,15 @@ class Kernel(object):
 
 
 	def __addAccessControlHeader(self, request: Request, response: Response):
+		"""
+			Adds the Access-Control-Allow-Origin header to the response,
+			if project root config.py has a key accessControlAllowOrigin,
+			holding an list of strings.
+
+		:param request:
+		:param response:
+		:return:
+		"""
 		if 'accessControlAllowOrigin' not in self.__config:
 			return
 
@@ -176,6 +170,7 @@ class Kernel(object):
 	def __str__(self):
 		"""
 			Just a dump string representation of the kernel
+			for debugging purposes only.
 		"""
 		ret = 'Config:\n'
 		for k in self.__config:

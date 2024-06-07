@@ -1,13 +1,13 @@
 from typing import Dict
 from urllib.parse import unquote, parse_qs
 from io import BytesIO
-from Wsgi.multipart import parse_form_data, MultipartPart
+from .multipart import parse_form_data, MultipartPart
 from .Exceptions import ParamNotFound, ValueNotFound, FileNotFound
 
 
 class Request(object):
 	"""
-		Abbildung des Requests
+		Represents the http request.
 	"""
 	def __init__(self, env: dict, paramsFromRoute: dict):
 		self.__env      = env
@@ -46,110 +46,100 @@ class Request(object):
 
 	def get(self, name: str):
 		"""
-			Liefert den Parameter name.
-			Gibt es mehrere Werte mit dem Namen, wird der erste Wert geliefert.
+			Returns the value of the parameter name.
+			If there are multiple values with the same name, the first value is returned.
+
 		:raise: ParamNotFound
 		"""
 		if name not in self.__params:
-			raise ParamNotFound(f'Parameter {name} not found')
+			raise ParamNotFound(returnMsg=f'Parameter {name} not found')
 
 		if 0 == len(self.__params[name]):
-			raise ParamNotFound(f'Parameter {name} is empty')
+			raise ParamNotFound(returnMsg=f'Parameter {name} is empty')
 
 		return self.__params[name][0]
 
 
 	def getAsList(self, name: str) -> list:
 		"""
-			Liefert die Liste der Werte des Parameters name
+			Returns the list of values of the parameter name.
+
 		:raise: ParamNotFound
 		"""
 		if name not in self.__params:
-			raise ParamNotFound(f'Parameter {name} not found')
+			raise ParamNotFound(returnMsg=f'Parameter {name} not found')
 
 		if 0 == len(self.__params[name]):
-			raise ParamNotFound(f'Parameter {name} is empty')
+			raise ParamNotFound(returnMsg=f'Parameter {name} is empty')
 
 		return self.__params[name]
 
 
 	def getDictParams(self) -> dict:
 		"""
-			Liefert die Parameter als Dict
-		:return:
+			Returns all parameters as a dictionary.
 		"""
 		return self.__params
 
 
 	def has(self, name: str):
 		"""
-			Prüft, ob es den Parameter name gibt
-		:param name:
-		:return: bool
+			Checks if the parameter name exists.
 		"""
 		return name in self.__params
 
 
 	def hasFile(self, name: str):
 		"""
-			Prüft, ob es für name eine Datei gibt
-		:param name:
-		:return:
+			Checks if a file with the name exists.
 		"""
 		return name in self.__files
 
 
 	def getFile(self, name: str) -> MultipartPart:
 		"""
-			Liefert die Datei zu name
-		:raise: ParamNotFound
+			Returns the file with the name.
 		"""
 		if name not in self.__files:
-			raise FileNotFound(f'File {name} not found')
+			raise FileNotFound(returnMsg=f'File {name} not found')
 
 		return self.__files[name]
 
 
 	def getDíctFiles(self) -> Dict[str, MultipartPart]:
 		"""
-			Liefert die Dateien als Dict
-		:return:
+			Returns all files as a dictionary.
 		"""
 		return self.__files
 
 
 	def getHeader(self, name: str):
 		"""
-			Liefert das Header-Value zu name
-		:param name:
-		:return:
-		:raise: ValueNotFound
+			Returns the value of the header field name.
 		"""
 		if name not in self.__header:
-			raise ValueNotFound(f'Header-Field {name} not found')
+			raise ValueNotFound(returnMsg=f'Header-Field {name} not found')
 
 		return self.__header[name]
 
 
 	def hasHeader(self, name: str):
 		"""
-			Prüft, ob es für name einen Wert in den Header-Values gibt
-		:param name:
-		:return:
+			Check if there is a value for name in the header values.
 		"""
 		return name in self.__header
 
 
 	def envHasKey(self, key: str) -> bool:
 		"""
-			Prüft, ob es für key einen Wert in den env-Values gibt
+			Check if the key exists in the env-Dict
 		"""
 		return key in self.__env
 
 
 	def getEnvByKey(self, key: str) -> str|None:
 		"""
-			Liefert den Wert zu key aus dem env-Dict oder None
+		Returns the value of key from the env-Dict or None.
 		"""
 		return self.__env.get(key, None)
 
@@ -157,7 +147,7 @@ class Request(object):
 	@property
 	def env(self) -> dict:
 		"""
-			Liefert das env-Dict
+			Returns the environment dictionary.
 		"""
 		return self.__env
 
@@ -170,17 +160,17 @@ class Request(object):
 				- from the path (Route)
 
 			Each parameter can have multiple values.
-			Files will be stored as a parameter und in
+			Files will be stored as a parameter und in files
 		"""
 		dictParams = {}
 		dictFiles  = {}
 
-		# Die Parameter aus der Route hinzufügen
+		# Add the parameters from the route
 		for key in paramsFromRoute:
 			dictParams[key] = [paramsFromRoute[key]]
 			print((paramsFromRoute[key]))
 
-		# Die Parameter aus dem Query-String hinzufügen
+		# Add the parameters from the query string
 		queryParams = parse_qs(env.get('QUERY_STRING', ''))
 		for item in queryParams.items():
 			if item[0] in dictParams:
@@ -188,7 +178,7 @@ class Request(object):
 			else:
 				dictParams[item[0]] = item[1]
 
-		# Die Parameter aus dem Body hinzufügen
+		# Add the parameters from the request body
 		(dictForm, dictMultiFiles) = parse_form_data(environ=env)
 
 		for key in dictForm:
@@ -205,7 +195,7 @@ class Request(object):
 			else:
 				dictParams[key] = [dictMultiFiles[key]]
 
-			# Save files separately
+			# Save files also separately
 			dictFiles[key] = dictMultiFiles[key]
 
 		return dictParams, dictFiles

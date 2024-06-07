@@ -1,4 +1,4 @@
-from Wsgi.BaseController import BaseController
+from .BaseController import BaseController
 
 
 class BaseTplController(BaseController):

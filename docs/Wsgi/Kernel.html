@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>Wsgi.Kernel API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Wsgi.Kernel</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import traceback
+from importlib import import_module
+from sqlobject import *
+from .Request import Request
+from .Response import Response
+from .Route import HttpMethods
+from .Exceptions import Base
+
+
+class Kernel(object):
+        &#34;&#34;&#34;
+                Handles the complete request to response cycle.
+        &#34;&#34;&#34;
+        def __init__(self, nameConfig: str = &#39;config&#39;, nameRoutes: str = &#39;routes&#39;):
+                &#34;&#34;&#34;
+                Sets the names of the configuration and routes files.
+
+                These files are expected to be in the project root.
+
+                :param nameConfig: str
+
+                :param nameRoutes: str
+                &#34;&#34;&#34;
+
+                self.__nameConfig = nameConfig
+                self.__nameRoutes = nameRoutes
+
+                self.__routes = {}
+                self.__config = {}
+                self.__env    = {}
+                self.__loadConfig()
+                self.__connectToDatabase()
+                self.__loadRoutes()
+
+
+        def run(self, env: dict, startResponse):
+                &#34;&#34;&#34;
+                        Handles to whole request.
+
+                        Will be called by your application.py
+                &#34;&#34;&#34;
+                # Only needed for the __str__ method and debug purposes. DO NOT USE!
+                self.__env = env
+
+                # Iterate over all routes
+                for idx in self.__routes:
+                        if not self.__routes[idx].match(path=env.get(&#39;PATH_INFO&#39;), httpMethod=HttpMethods[env.get(&#39;REQUEST_METHOD&#39;)]):
+                                continue
+
+                        # Found, so I call the controller method
+                        request = Request(
+                                env=env,
+                                paramsFromRoute=self.__routes[idx].getParamsFromPath(path=env.get(&#39;PATH_INFO&#39;))
+                        )
+
+                        response = Response(
+                                startResponse=startResponse,
+                                request=request
+                        )
+
+                        response.addHeader(&#39;X-Framework&#39;, &#39;Wsgi by Thomas Siemion&#39;)
+                        self.__addAccessControlHeader(request=request, response=response)
+
+                        # Call the controller method
+                        try:
+                                self.__routes[idx].methodToCall(
+                                        request=request,
+                                        response=response
+                                )
+
+                        except Exception as e:
+                                if &#39;debug&#39; in self.__config and self.__config[&#39;debug&#39;] is True:
+                                        tb = traceback.format_exc()
+                                else:
+                                        tb = &#39;&#39;
+
+                                if issubclass(type(e), Base):
+                                        response.returnCode    = e.returnCode
+                                        response.stringContent = e.returnMsg
+                                else:
+                                        response.returnCode    = 500
+                                        response.stringContent = f&#39;Internal server _error.\n{tb}&#39;
+
+                                response.contentType = &#39;text/plain&#39;
+                                response.charset     = &#39;utf-8&#39;
+
+                        return response.getContent()
+
+                # No matching route found
+                # todo create a Error-Controller
+                response = Response(
+                        startResponse=startResponse,
+                        request=Request(env=env, paramsFromRoute={})
+                )
+
+                response.returnCode    = 404
+                response.stringContent = f&#34;No controller method found for route: {env.get(&#39;REQUEST_METHOD&#39;)}_{env.get(&#39;PATH_INFO&#39;)}&#34;
+                response.contentType   = &#39;text/plain&#39;
+                response.charset       = &#39;utf-8&#39;
+
+                return response.getContent()
+
+
+        def __loadConfig(self):
+                &#34;&#34;&#34;
+                        Reads the variables from project root config.py
+                :return:
+                &#34;&#34;&#34;
+                config = import_module(name=self.__nameConfig)
+                for k in dir(config):
+                        if k.startswith(&#39;__&#39;):
+                                continue
+
+                        self.__config[k] = getattr(config, k)
+
+                return
+
+
+        def __connectToDatabase(self):
+                &#34;&#34;&#34;
+                        If the key uriDb is present in the project root config.py, a SqlObject
+                        database connection will be established.
+                :return:
+                &#34;&#34;&#34;
+                if &#39;uriDb&#39; not in self.__config:
+                        self.__config[&#39;dbConnection&#39;] = None
+                        return
+
+                self.__config[&#39;dbConnection&#39;] = connectionForURI(uri=self.__config[&#39;uriDb&#39;])
+                sqlhub.processConnection = self.__config[&#39;dbConnection&#39;]
+
+
+        def __loadRoutes(self):
+                &#34;&#34;&#34;
+                        Loads and creates all routes from project root routes.py
+                        and injects the configuration to them.
+                :return:
+                &#34;&#34;&#34;
+                module = import_module(name=self.__nameRoutes)
+                for route in getattr(module, self.__nameRoutes):
+                        route.setConfig(config=self.__config)
+                        k = f&#39;{route.httpMethod.name}_{route.pathRegEx}&#39;
+                        self.__routes[k] = route
+
+
+        def __addAccessControlHeader(self, request: Request, response: Response):
+                &#34;&#34;&#34;
+                        Adds the Access-Control-Allow-Origin header to the response,
+                        if project root config.py has a key accessControlAllowOrigin,
+                        holding an list of strings.
+
+                :param request:
+                :param response:
+                :return:
+                &#34;&#34;&#34;
+                if &#39;accessControlAllowOrigin&#39; not in self.__config:
+                        return
+
+                accessControlAllowOrigin = []
+                accessControlAllowOrigin = accessControlAllowOrigin + self.__config[&#39;accessControlAllowOrigin&#39;]
+
+                if 0 == len(accessControlAllowOrigin) or False == request.hasHeader(&#39;Origin&#39;):
+                        return
+
+                for url in accessControlAllowOrigin:
+                        if request.getHeader(&#39;Origin&#39;) == url:
+                                response.addHeader(&#39;Access-Control-Allow-Origin&#39;, url)
+
+
+        def __str__(self):
+                &#34;&#34;&#34;
+                        Just a dump string representation of the kernel
+                        for debugging purposes only.
+                &#34;&#34;&#34;
+                ret = &#39;Config:\n&#39;
+                for k in self.__config:
+                        ret += &#39;\t{key}={val}\n&#39;.format(key=k, val=self.__config[k])
+
+                ret += &#39;\nRoutes:\n&#39;
+
+                for k in self.__routes:
+                        ret += &#39;\t&#39; + str(self.__routes[k]) + &#39;\n&#39;
+
+                ret += &#39;\nENV:\n&#39;
+
+                for k in self.__env:
+                        ret += &#39;\t{key}={val}\n&#39;.format(key=k, val=self.__env[k])
+
+                return ret</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="Wsgi.Kernel.Kernel"><code class="flex name class">
+<span>class <span class="ident">Kernel</span></span>
+<span>(</span><span>nameConfig: str = 'config', nameRoutes: str = 'routes')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Handles the complete request to response cycle.</p>
+<p>Sets the names of the configuration and routes files.</p>
+<p>These files are expected to be in the project root.</p>
+<p>:param nameConfig: str</p>
+<p>:param nameRoutes: str</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Kernel(object):
+        &#34;&#34;&#34;
+                Handles the complete request to response cycle.
+        &#34;&#34;&#34;
+        def __init__(self, nameConfig: str = &#39;config&#39;, nameRoutes: str = &#39;routes&#39;):
+                &#34;&#34;&#34;
+                Sets the names of the configuration and routes files.
+
+                These files are expected to be in the project root.
+
+                :param nameConfig: str
+
+                :param nameRoutes: str
+                &#34;&#34;&#34;
+
+                self.__nameConfig = nameConfig
+                self.__nameRoutes = nameRoutes
+
+                self.__routes = {}
+                self.__config = {}
+                self.__env    = {}
+                self.__loadConfig()
+                self.__connectToDatabase()
+                self.__loadRoutes()
+
+
+        def run(self, env: dict, startResponse):
+                &#34;&#34;&#34;
+                        Handles to whole request.
+
+                        Will be called by your application.py
+                &#34;&#34;&#34;
+                # Only needed for the __str__ method and debug purposes. DO NOT USE!
+                self.__env = env
+
+                # Iterate over all routes
+                for idx in self.__routes:
+                        if not self.__routes[idx].match(path=env.get(&#39;PATH_INFO&#39;), httpMethod=HttpMethods[env.get(&#39;REQUEST_METHOD&#39;)]):
+                                continue
+
+                        # Found, so I call the controller method
+                        request = Request(
+                                env=env,
+                                paramsFromRoute=self.__routes[idx].getParamsFromPath(path=env.get(&#39;PATH_INFO&#39;))
+                        )
+
+                        response = Response(
+                                startResponse=startResponse,
+                                request=request
+                        )
+
+                        response.addHeader(&#39;X-Framework&#39;, &#39;Wsgi by Thomas Siemion&#39;)
+                        self.__addAccessControlHeader(request=request, response=response)
+
+                        # Call the controller method
+                        try:
+                                self.__routes[idx].methodToCall(
+                                        request=request,
+                                        response=response
+                                )
+
+                        except Exception as e:
+                                if &#39;debug&#39; in self.__config and self.__config[&#39;debug&#39;] is True:
+                                        tb = traceback.format_exc()
+                                else:
+                                        tb = &#39;&#39;
+
+                                if issubclass(type(e), Base):
+                                        response.returnCode    = e.returnCode
+                                        response.stringContent = e.returnMsg
+                                else:
+                                        response.returnCode    = 500
+                                        response.stringContent = f&#39;Internal server _error.\n{tb}&#39;
+
+                                response.contentType = &#39;text/plain&#39;
+                                response.charset     = &#39;utf-8&#39;
+
+                        return response.getContent()
+
+                # No matching route found
+                # todo create a Error-Controller
+                response = Response(
+                        startResponse=startResponse,
+                        request=Request(env=env, paramsFromRoute={})
+                )
+
+                response.returnCode    = 404
+                response.stringContent = f&#34;No controller method found for route: {env.get(&#39;REQUEST_METHOD&#39;)}_{env.get(&#39;PATH_INFO&#39;)}&#34;
+                response.contentType   = &#39;text/plain&#39;
+                response.charset       = &#39;utf-8&#39;
+
+                return response.getContent()
+
+
+        def __loadConfig(self):
+                &#34;&#34;&#34;
+                        Reads the variables from project root config.py
+                :return:
+                &#34;&#34;&#34;
+                config = import_module(name=self.__nameConfig)
+                for k in dir(config):
+                        if k.startswith(&#39;__&#39;):
+                                continue
+
+                        self.__config[k] = getattr(config, k)
+
+                return
+
+
+        def __connectToDatabase(self):
+                &#34;&#34;&#34;
+                        If the key uriDb is present in the project root config.py, a SqlObject
+                        database connection will be established.
+                :return:
+                &#34;&#34;&#34;
+                if &#39;uriDb&#39; not in self.__config:
+                        self.__config[&#39;dbConnection&#39;] = None
+                        return
+
+                self.__config[&#39;dbConnection&#39;] = connectionForURI(uri=self.__config[&#39;uriDb&#39;])
+                sqlhub.processConnection = self.__config[&#39;dbConnection&#39;]
+
+
+        def __loadRoutes(self):
+                &#34;&#34;&#34;
+                        Loads and creates all routes from project root routes.py
+                        and injects the configuration to them.
+                :return:
+                &#34;&#34;&#34;
+                module = import_module(name=self.__nameRoutes)
+                for route in getattr(module, self.__nameRoutes):
+                        route.setConfig(config=self.__config)
+                        k = f&#39;{route.httpMethod.name}_{route.pathRegEx}&#39;
+                        self.__routes[k] = route
+
+
+        def __addAccessControlHeader(self, request: Request, response: Response):
+                &#34;&#34;&#34;
+                        Adds the Access-Control-Allow-Origin header to the response,
+                        if project root config.py has a key accessControlAllowOrigin,
+                        holding an list of strings.
+
+                :param request:
+                :param response:
+                :return:
+                &#34;&#34;&#34;
+                if &#39;accessControlAllowOrigin&#39; not in self.__config:
+                        return
+
+                accessControlAllowOrigin = []
+                accessControlAllowOrigin = accessControlAllowOrigin + self.__config[&#39;accessControlAllowOrigin&#39;]
+
+                if 0 == len(accessControlAllowOrigin) or False == request.hasHeader(&#39;Origin&#39;):
+                        return
+
+                for url in accessControlAllowOrigin:
+                        if request.getHeader(&#39;Origin&#39;) == url:
+                                response.addHeader(&#39;Access-Control-Allow-Origin&#39;, url)
+
+
+        def __str__(self):
+                &#34;&#34;&#34;
+                        Just a dump string representation of the kernel
+                        for debugging purposes only.
+                &#34;&#34;&#34;
+                ret = &#39;Config:\n&#39;
+                for k in self.__config:
+                        ret += &#39;\t{key}={val}\n&#39;.format(key=k, val=self.__config[k])
+
+                ret += &#39;\nRoutes:\n&#39;
+
+                for k in self.__routes:
+                        ret += &#39;\t&#39; + str(self.__routes[k]) + &#39;\n&#39;
+
+                ret += &#39;\nENV:\n&#39;
+
+                for k in self.__env:
+                        ret += &#39;\t{key}={val}\n&#39;.format(key=k, val=self.__env[k])
+
+                return ret</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="Wsgi.Kernel.Kernel.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self, env: dict, startResponse)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Handles to whole request.</p>
+<p>Will be called by your application.py</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self, env: dict, startResponse):
+        &#34;&#34;&#34;
+                Handles to whole request.
+
+                Will be called by your application.py
+        &#34;&#34;&#34;
+        # Only needed for the __str__ method and debug purposes. DO NOT USE!
+        self.__env = env
+
+        # Iterate over all routes
+        for idx in self.__routes:
+                if not self.__routes[idx].match(path=env.get(&#39;PATH_INFO&#39;), httpMethod=HttpMethods[env.get(&#39;REQUEST_METHOD&#39;)]):
+                        continue
+
+                # Found, so I call the controller method
+                request = Request(
+                        env=env,
+                        paramsFromRoute=self.__routes[idx].getParamsFromPath(path=env.get(&#39;PATH_INFO&#39;))
+                )
+
+                response = Response(
+                        startResponse=startResponse,
+                        request=request
+                )
+
+                response.addHeader(&#39;X-Framework&#39;, &#39;Wsgi by Thomas Siemion&#39;)
+                self.__addAccessControlHeader(request=request, response=response)
+
+                # Call the controller method
+                try:
+                        self.__routes[idx].methodToCall(
+                                request=request,
+                                response=response
+                        )
+
+                except Exception as e:
+                        if &#39;debug&#39; in self.__config and self.__config[&#39;debug&#39;] is True:
+                                tb = traceback.format_exc()
+                        else:
+                                tb = &#39;&#39;
+
+                        if issubclass(type(e), Base):
+                                response.returnCode    = e.returnCode
+                                response.stringContent = e.returnMsg
+                        else:
+                                response.returnCode    = 500
+                                response.stringContent = f&#39;Internal server _error.\n{tb}&#39;
+
+                        response.contentType = &#39;text/plain&#39;
+                        response.charset     = &#39;utf-8&#39;
+
+                return response.getContent()
+
+        # No matching route found
+        # todo create a Error-Controller
+        response = Response(
+                startResponse=startResponse,
+                request=Request(env=env, paramsFromRoute={})
+        )
+
+        response.returnCode    = 404
+        response.stringContent = f&#34;No controller method found for route: {env.get(&#39;REQUEST_METHOD&#39;)}_{env.get(&#39;PATH_INFO&#39;)}&#34;
+        response.contentType   = &#39;text/plain&#39;
+        response.charset       = &#39;utf-8&#39;
+
+        return response.getContent()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="Wsgi" href="index.html">Wsgi</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="Wsgi.Kernel.Kernel" href="#Wsgi.Kernel.Kernel">Kernel</a></code></h4>
+<ul class="">
+<li><code><a title="Wsgi.Kernel.Kernel.run" href="#Wsgi.Kernel.Kernel.run">run</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

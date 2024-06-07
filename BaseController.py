@@ -5,20 +5,19 @@ from .Exceptions import Unauthorized
 
 def decoratorLoginRequired(func):
 	"""
-		Decorator, der prüft, ob der Benutzer sich per BasicAuth angemeldet hat.
-		Kann nur für AdmController-Methoden verwendet werden:
-			def xAction(self, request: Request, response: Response):
+		A decorator for controller methods, that checks if the user has logged in via BasicAuth.
+
+		If not so, a 401 Unauthorized exception is raised.
 	"""
 	def wrapper(self, request: Request, response: Response):
 		if 'Basic' != request.getEnvByKey('AUTH_TYPE'):
-			response.stringContent = f"Invalid auth type: {request.getEnvByKey('AUTH_TYPE')}"
-			response.returnCode = 401
-			raise Unauthorized(response.stringContent)
+			raise Unauthorized(
+				returnCode=401,
+				returnMsg=f"Invalid auth type: {request.getEnvByKey('AUTH_TYPE')}"
+			)
 
 		if request.getEnvByKey('REMOTE_USER') is None:
-			response.stringContent = 'Unauthorized'
-			response.returnCode = 401
-			raise Unauthorized(response.stringContent)
+			raise Unauthorized(returnCode=401, returnMsg='Unauthorized')
 
 		return func(self, request, response)
 	return wrapper
@@ -26,7 +25,7 @@ def decoratorLoginRequired(func):
 
 class BaseController(object):
 	"""
-		Basisklasse aller AdmController
+		Basisklasse of all controllers.
 	"""
 	def __init__(self, config: dict):
 		self._config = config

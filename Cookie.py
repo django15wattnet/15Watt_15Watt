@@ -1,7 +1,7 @@
-
-
 class Cookie(object):
-
+	"""
+	Representation of a HTTP cookie
+	"""
 	__key: str
 	value: str
 	__path: str
@@ -28,6 +28,3 @@ class Cookie(object):
 			value=self.value,
 			path=self.__path
 		)
-
-
-

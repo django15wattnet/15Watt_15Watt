@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Parser for multipart/form-data
-==============================
+------------------------------
 
 This module provides a parser for the multipart/form-data format. It can read
 from a file, a socket or a WSGI environment. The parser can be used to replace

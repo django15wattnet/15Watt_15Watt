@@ -1,5 +1,6 @@
 # Wsgi
-A slim, fast and comfortable WSGI-Framework for Python 3.x.  
+A slim, fast and comfortable WSGI-Framework for Python >= 3.6.  
+Testes with 3.10 + 3.12.
 Uses https://github.com/defnull/multipart for handling the multipart/form-data requests instaed of cgi.FieldStorage.
 
 ## Installation
@@ -11,6 +12,8 @@ python packages.
     cd /path/to/your/import/able/python/packages
     git clone git@github.com:django15wattnet/Wsgi.git
 ```
+
+## SRC Documentation
 
 ## Usage
 
@@ -25,7 +28,7 @@ Read the [mod_wsgi docu](https://modwsgi.readthedocs.io/en/master/configuration.
         WSGIProcessGroup name_of_your_wsgi_daemon_process           # The name of your WSGIDaemonProcess
         
         # For development, each request loads a new python interpreter / application.py, no need the reload the web server
-        WSGIDaemonProcess name_of_your_wsgi_daemon_process user=yourUnixYuser group=yourUnixGroup processes=1 threads=1 maximum-requests=1 home=/path/to/python/files python-path=/path/to/python/files
+        WSGIDaemonProcess name_of_your_wsgi_daemon_process user=yourUnixUser group=yourUnixGroup processes=1 threads=1 maximum-requests=1 home=/path/to/python/files python-path=/path/to/python/files
         
         # For a production enviroment change processes, threads and maximum-requests to your needes
         
@@ -61,6 +64,7 @@ Read the [mod_wsgi docu](https://modwsgi.readthedocs.io/en/master/configuration.
 ```
 
 ### Project Layout
+@ToDo
 
 ### The Application
 Create a ```application.py``` file in ```/path/to/python/files```:
@@ -114,7 +118,7 @@ from Wsgi.Route import Route, HttpMethods
 
 routes = [
 	Route(
-		path='/do/{id}//{what}',
+		path='/do/{id}/{what}',
 		nameController='Controllers.DoWiredStuffController.DoWiredStuffController',
 		nameMethod='doStuffAction',
 		httpMethod=HttpMethods.GET,
@@ -147,7 +151,7 @@ from Wsgi.Request import Request
 from Wsgi.Response import Response
 
 
-class TimeController(BaseController):
+class ExampleController(BaseController):
 
 	def __init__(self, config: dict):
 		super().__init__(config=config)
@@ -168,8 +172,9 @@ Use what ever you like as your template engine.
 At this moment (2024-06-01) I'm not shure the BaseTplController is necessary.
 
 ### Models
-Have a look at the DoDos.  
-Use what ever you like as your ORM or database access.
+Have a look at the ToDos.  
+Use what ever you like as your ORM or database access.  
+At this moment SqlObject is needed.
 
 ## ToDos
 - Make the use of [SqlObject](https://www.sqlobject.org/) optional
