@@ -8,63 +8,62 @@ Uses https://github.com/defnull/multipart for handling the multipart/form-data r
 ```pip3 install 15Watt_Wsgi```
 
 ### Git
-You can clone the [repository](https://github.com/django15wattnet/Wsgi) and
-install the package in a directory, from where you can import
-python packages. 
+You can clone the [repository](https://github.com/django15wattnet/15Watt_Wsgi) and
+install the package to a directory, from where you can import python packages. 
 ```
     cd /path/to/your/import/able/python/packages
     git clone git@github.com:django15wattnet/15Watt_Wsgi.git
 ```
 
 ## SRC Documentation
-[See](https://github.com/django15wattnet/15Watt_Wsgi/tree/main/docs/Wsgi)
+[See](https://wsgi.15watt.net)
 
 ## Usage
 
 ### The Apache2 Configuration
 Read the [mod_wsgi docu](https://modwsgi.readthedocs.io/en/master/configuration.html).
 ```
-    <VirtualHost x.x.x.x:port>
-        ServerName your.server.name
-        DocumentRoot /path/to/static/files                          # Where your static html-files are stored
-        
-        WSGIScriptAlias / /path/to/python/files/application.py      # Where your application.py is stored and invoked by calling http[s]://your.server.name/
-        WSGIProcessGroup name_of_your_wsgi_daemon_process           # The name of your WSGIDaemonProcess
-        
-        # For development, each request loads a new python interpreter / application.py, no need the reload the web server
-        WSGIDaemonProcess name_of_your_wsgi_daemon_process user=yourUnixUser group=yourUnixGroup processes=1 threads=1 maximum-requests=1 home=/path/to/python/files python-path=/path/to/python/files
-        
-        # For a production enviroment change processes, threads and maximum-requests to your needes
-        
-        # The confiuration for the static files
-        <Directory /path/to/static/files/>
-        # Read the Apache2 docu https://httpd.apache.org/docs/2.4/mod/core.html#directory
-           Options -Indexes -FollowSymLinks -MultiViews -Includes
-           AllowOverride None
-           Require all granted
-           allow from all
-        </Directory>
-        
-        # The configuration for the application directory
-        <Directory /path/to/python/files/>
-        # Read the Apache2 docu https://httpd.apache.org/docs/2.4/mod/core.html#directory
-            Require all granted
-            Options FollowSymLinks
-            AllowOverride None
-            Header set Access-Control-Allow-Origin '*'          # I'm not sure if this is needed
-        </Directory>
-        
-        # Alias for the static, directly by the web server, deliveryed files and directories
-        Alias /favicon.ico /path/to/static/files/favicon.ico
-        Alias /css/ /path/to/static/files/css/
-        Alias /js/ /path/to/static/files/js/
-        Alias /img/ /path/to/static/files/img/ 
-        
-        ...
-        
-        # Your other Apache configurations
-        
-        </VirtualHost>
+<VirtualHost x.x.x.x:port>
+    ServerName your.server.name
+    DocumentRoot /path/to/static/files                          # Where your static html-files are stored
+    
+    WSGIScriptAlias / /path/to/python/files/application.py      # Where your application.py is stored and invoked by calling http[s]://your.server.name/
+    WSGIProcessGroup name_of_your_wsgi_daemon_process           # The name of your WSGIDaemonProcess
+    
+    # For development, each request loads a new python interpreter / application.py, no need the reload the web server
+    WSGIDaemonProcess name_of_your_wsgi_daemon_process user=yourUnixUser group=yourUnixGroup processes=1 threads=1 maximum-requests=1 home=/path/to/python/files python-path=/path/to/python/files
+    
+    # For a production enviroment change processes, threads and maximum-requests to your needes
+    
+    # The confiuration for the static files
+    <Directory /path/to/static/files/>
+    # Read the Apache2 docu https://httpd.apache.org/docs/2.4/mod/core.html#directory
+       Options -Indexes -FollowSymLinks -MultiViews -Includes
+       AllowOverride None
+       Require all granted
+       allow from all
+    </Directory>
+    
+    # The configuration for the application directory
+    <Directory /path/to/python/files/>
+    # Read the Apache2 docu https://httpd.apache.org/docs/2.4/mod/core.html#directory
+        Require all granted
+        Options FollowSymLinks
+        AllowOverride None
+        Header set Access-Control-Allow-Origin '*'          # I'm not sure if this is needed
+    </Directory>
+    
+    # Alias for the static, directly by the web server, deliveryed files and directories
+    Alias /favicon.ico /path/to/static/files/favicon.ico
+    Alias /css/ /path/to/static/files/css/
+    Alias /js/ /path/to/static/files/js/
+    Alias /img/ /path/to/static/files/img/ 
+    
+    ...
+    
+    # Your other Apache configurations
+    
+    </VirtualHost>
 ```
 
 ### Project Layout
@@ -88,7 +87,7 @@ def application(env: dict, start_response):
 ```
 All requests are handled by the Kernel.run method.  ```WSGIScriptAlias / /path/to/python/files/application.py```  
 The Kernel is a singleton and is created only once per lifetime of the application. By this, the configuration und the routes are loaded only once.  
-**Only files and / or directories definded by Apache Alias directives are delivered by the web server drircetly!**
+**Only files and/or directories definded by Apache Alias directives are delivered by the web server drircetly!**
 
 ### Routes
 The routes definitions tells the Kernel witch request path ist mapped to witch controller and method.  
@@ -168,7 +167,70 @@ class ExampleController(BaseController):
 		return
 ```
 Will send the string 'Hello World' with the content type 'text/plain' and the return code 200 to the client.  
-Do what ever you want in the getAction method 😊.
+Do what ever you want in your getAction method 😊.
+
+
+#### A controller with a method that gets parameters from the route
+The route with parameters in the path ```/path/to/python/files/routes.py```:
+```
+from 15Watt_Wsgi.Route import Route, HttpMethods
+
+routes = [
+	Route(
+		path='/with/params/{id}/{what}',
+		nameController='Controllers.ExampleController.ExampleController',
+		nameMethod='withParamsAction',
+		httpMethod=HttpMethods.GET,
+		params = {
+                    'id': 'int',
+                    'what': 'str'
+                }
+	)
+]
+```
+The controller ```/path/to/python/files/Controllers/ExampleController.py```:
+```
+from 15Watt_Wsgi.BaseController import BaseController
+from 15Watt_Wsgi.Request import Request
+from 15Watt_Wsgi.Response import Response
+
+
+class ExampleController(BaseController):
+
+	def __init__(self, config: dict):
+		super().__init__(config=config)
+
+
+	def withParamsAction(self, request: Request, response: Response):
+		response.stringContent = f'Hello World, id = {request.get('id)} what = "{request.get('what')"}'
+		response.contentType = 'text/plain
+		response.returnCode = 200
+		return
+```
+When the client requests ```/with/params/42/machWas```  
+the response will be ```Hello World, id = 42 what = "machWas"```  
+with the content type 'text/plain' and the return code 200.
+
+```request.get('id)``` will return the value of the parameter ```id``` as type int from the request.  
+```request.get('what)``` will return the value of the parameter ```what``` as type str from the request.
+
+
+### The configuration file
+is expected in ```/path/to/python/files/config.py```  
+as a simple assignments of variables to values.  
+```
+key1 = 'Value1'
+confVar2 = 42
+```
+The Kernel will load the configuration file and make the variables, as a dict, available to the controllers,  
+in the property ```'self._config```  
+whit this content:
+```
+{
+    'key1': 'Value1', 
+    'confVar2': 42
+}
+```
 
 ### Templates
 I use [Cheetah3](https://cheetahtemplate.org/) for the templates.  
