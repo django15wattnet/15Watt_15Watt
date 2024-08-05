@@ -11,6 +11,7 @@ def decoratorLoginRequired(func):
 	"""
 	def wrapper(self, request: Request, response: Response):
 		if 'Basic' != request.getEnvByKey('AUTH_TYPE'):
+			# Send a 401 response as plain/text, not a exception/500er
 			raise Unauthorized(
 				returnCode=401,
 				returnMsg=f"Invalid auth type: {request.getEnvByKey('AUTH_TYPE')}"
