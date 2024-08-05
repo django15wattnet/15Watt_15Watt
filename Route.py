@@ -149,7 +149,7 @@ class Route(object):
                 raise InvalidData(returnMsg=f'Parameter "{placeHolderPlain}" not defined in paramsDef. Route = {self.__path}')
 
             if 'str' == self.__dictParamsDef[placeHolderPlain]:
-                to = "(?P<{n}>[\w\/\-]{{1,}})".format(n=placeHolderPlain)
+                to = "(?P<{n}>[\w\/\-\.]{{1,}})".format(n=placeHolderPlain)
             elif 'int' == self.__dictParamsDef[placeHolderPlain]:
                 to = "(?P<{n}>[0-9]{{1,}})".format(n=placeHolderPlain)
             else:
