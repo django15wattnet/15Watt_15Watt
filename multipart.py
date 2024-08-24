@@ -232,7 +232,7 @@ class MultipartParser(object):
     def _lineiter(self):
         """ Iterate over a binary file-like object line by line. Each line is
             returned as a (line, line_ending) tuple. If the line does not fit
-            into self.buffer_size, line_ending is empty and the rest of the line
+            into cls.buffer_size, line_ending is empty and the rest of the line
             is returned with the next iteration.
         """
         read = self.stream.read

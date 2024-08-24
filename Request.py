@@ -168,7 +168,6 @@ class Request(object):
 		# Add the parameters from the route
 		for key in paramsFromRoute:
 			dictParams[key] = [paramsFromRoute[key]]
-			print((paramsFromRoute[key]))
 
 		# Add the parameters from the query string
 		queryParams = parse_qs(env.get('QUERY_STRING', ''))
