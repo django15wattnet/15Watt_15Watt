@@ -181,12 +181,10 @@ class Request(object):
 		(dictForm, dictMultiFiles) = parse_form_data(environ=env)
 
 		for key in dictForm:
-
 			if key in dictParams:
-				dictParams[key] += [dictForm[key]]
+				dictParams[key] += dictForm.getall(key)
 			else:
-				dictParams[key] = [dictForm[key]]
-
+				dictParams[key] = dictForm.getall(key)
 
 		for key in dictMultiFiles:
 			if key in dictParams:
