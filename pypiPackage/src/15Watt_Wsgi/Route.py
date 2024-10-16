@@ -102,12 +102,8 @@ class Route(object):
         """
         if httpMethod != self.__httpMethod:
             return False
-
-        path = path.rstrip('/')
-        if '' == path:
-            path = '/'
         
-        return re.match(f'^{self.__pathRegEx}$', path) is not None
+        return re.match(f'^{self.__pathRegEx}$', path.rstrip('/')) is not None
 
 
     def getParamsFromPath(self, path: str) -> dict:
