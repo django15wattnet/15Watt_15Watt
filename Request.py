@@ -82,14 +82,14 @@ class Request(object):
 		return self.__params
 
 
-	def has(self, name: str):
+	def has(self, name: str) -> bool:
 		"""
 			Checks if the parameter name exists.
 		"""
 		return name in self.__params
 
 
-	def hasFile(self, name: str):
+	def hasFile(self, name: str) -> bool:
 		"""
 			Checks if a file with the name exists.
 		"""
@@ -113,7 +113,7 @@ class Request(object):
 		return self.__files
 
 
-	def getHeader(self, name: str):
+	def getHeader(self, name: str) -> str:
 		"""
 			Returns the value of the header field name.
 		"""
@@ -123,7 +123,7 @@ class Request(object):
 		return self.__header[name]
 
 
-	def hasHeader(self, name: str):
+	def hasHeader(self, name: str) -> bool:
 		"""
 			Check if there is a value for name in the header values.
 		"""
