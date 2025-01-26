@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script will create the PyPi package for 15Watt_Wsgi
+# This script will create the PyPi package for Wsgi-15Watt
 # Upload it to PyPi with:
 #     python3 -m twine upload --repository pypi dist/*
 

@@ -1,18 +1,18 @@
-# 15Watt_Wsgi
+# Wsgi-15Watt
 A slim, fast and comfortable WSGI-Framework for Python >= 3.6.  
 Tested with 3.10 + 3.12.  
 Uses https://github.com/defnull/multipart for handling the multipart/form-data requests instead of cgi.FieldStorage.
 
 ## Installation
 ### PIP
-```pip3 install 15Watt_Wsgi```
+```pip3 install 15Watt-Wsgi```
 
 ### Git
-You can clone the [repository](https://github.com/django15wattnet/15Watt_Wsgi) and
+You can clone the [repository](https://github.com/django15wattnet/Wsgi-15Watt) and
 install the package to a directory, from where you can import python packages. 
 ```
     cd /path/to/your/import/able/python/packages
-    git clone git@github.com:django15wattnet/15Watt_Wsgi.git
+    git clone git@github.com:django15wattnet/15Watt-Wsgi.git
 ```
 
 ## SRC Documentation
@@ -73,7 +73,7 @@ Read the [mod_wsgi docu](https://modwsgi.readthedocs.io/en/master/configuration.
 Create a ```application.py``` file in ```/path/to/python/files```:
 ```  
 #!/usr/bin/env python
-from 15Watt_Wsgi.Kernel import Kernel
+from Wsgi-15Watt.Kernel import Kernel
 
 kernel = None
 
@@ -95,7 +95,7 @@ Create a ```routes.py``` file in ```/path/to/python/files```:
 
 #### Example routes without parameters in the path
 ```
-from 15Watt_Wsgi.Route import Route, HttpMethods
+from Wsgi-15Watt.Route import Route, HttpMethods
 
 routes = [
 	Route(
@@ -117,7 +117,7 @@ A request to ```/qcell``` will be handled by ```from QCell.StaticPagesController
 
 #### Example routes with parameters in the path
 ```
-from 15Watt_Wsgi.Route import Route, HttpMethods
+from Wsgi-15Watt.Route import Route, HttpMethods
 
 routes = [
 	Route(
@@ -149,9 +149,9 @@ The controllers orchestrate the work to be done. Receive the request, do the wor
 
 #### A very simple example Controller
 ```
-from 15Watt_Wsgi.BaseController import BaseController
-from 15Watt_Wsgi.Request import Request
-from 15Watt_Wsgi.Response import Response
+from Wsgi-15Watt.BaseController import BaseController
+from Wsgi-15Watt.Request import Request
+from Wsgi-15Watt.Response import Response
 
 
 class ExampleController(BaseController):
@@ -173,7 +173,7 @@ Do what ever you want in your getAction method 😊.
 #### A controller with a method that gets parameters from the route
 The route with parameters in the path ```/path/to/python/files/routes.py```:
 ```
-from 15Watt_Wsgi.Route import Route, HttpMethods
+from Wsgi-15Watt.Route import Route, HttpMethods
 
 routes = [
 	Route(
@@ -190,9 +190,9 @@ routes = [
 ```
 The controller ```/path/to/python/files/Controllers/ExampleController.py```:
 ```
-from 15Watt_Wsgi.BaseController import BaseController
-from 15Watt_Wsgi.Request import Request
-from 15Watt_Wsgi.Response import Response
+from Wsgi-15Watt.BaseController import BaseController
+from Wsgi-15Watt.Request import Request
+from Wsgi-15Watt.Response import Response
 
 
 class ExampleController(BaseController):
