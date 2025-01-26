@@ -5,7 +5,7 @@ Uses https://github.com/defnull/multipart for handling the multipart/form-data r
 
 ## Installation
 ### PIP
-```pip3 install 15Watt-Wsgi```
+```pip3 install Wsgi-15Watt```
 
 ### Git
 You can clone the [repository](https://github.com/django15wattnet/Wsgi-15Watt) and
