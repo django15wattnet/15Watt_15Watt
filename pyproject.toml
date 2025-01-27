@@ -1,6 +1,6 @@
 [project]
 name = "Wsgi-15Watt"
-version = "0.9.6"
+version = "0.9.7"
 authors = [
   { name="Thomas Siemion", email="pypi@15watt.net" },
 ]

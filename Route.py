@@ -26,7 +26,21 @@ class HttpMethods(Enum):
 
 class Route(object):
     """
-    The route is the connection between the path and the called controller method
+    The route is the connection between the path and the called controller method.
+
+    Example:
+
+        Route(
+            path='/adm/image/edit/{id}',
+            nameController='image.AdmController.AdmController',
+            nameMethod='admEditAction',
+            httpMethod=HttpMethods.POST,
+            paramsDef={
+                'id': 'int',
+                'description': 'str'
+            }
+        )
+
     """
     def __init__(
             self,

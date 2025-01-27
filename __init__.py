@@ -1,5 +1,5 @@
 """
-	Wsgi, fast simple and easy to use WSGI framework.
+	Wsgi-15Watt, a fast, simple and easy to use WSGI framework.
 
 	GIT: https://github.com/django15wattnet/Wsgi-15Watt
 
